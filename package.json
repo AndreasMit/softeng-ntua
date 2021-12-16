@@ -1,0 +1,25 @@
+{
+  "name": "tl21-43",
+  "version": "1.0.0",
+  "description": "tolls interoperability",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntua/TL21-43.git"
+  },
+  "keywords": [
+    "tolls"
+  ],
+  "author": "Kegkeroglou,Lenakakis,Marinos,Mitakidis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntua/TL21-43/issues"
+  },
+  "homepage": "https://github.com/ntua/TL21-43#readme"
+}
