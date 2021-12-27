@@ -9,9 +9,6 @@ baseurl = '/interoperability/api';
 
 app.listen(port,() => { console.log('app listening on port', port);} );
 
-<<<<<<< HEAD
-app.get('/', (req,res) => { res.send("Giati den vlepw progress sto YouTrack??")} );
-=======
 // app.get('/', (req,res) => { res.send("hello world")} );
 
 //send html file
@@ -35,4 +32,4 @@ app.use(baseurl, charges_by);
 // 	console.log("using body-parser:",  req.bodyparser.value)
 // 	req.send({"body": req.body})
 // })
->>>>>>> fb2b41e1fd95a6a4d99823bf166b5387ad68e11c
+
