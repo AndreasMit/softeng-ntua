@@ -26,8 +26,8 @@ const charges_by = require('./charges_by.js');
 //bind all endpoints to app router
 app.use(baseurl, passes_per_st);
 app.use(baseurl, passes_anal);
-// app.use(baseurl, passes_cost);
-// app.use(baseurl, charges_by);
+app.use(baseurl, passes_cost);
+app.use(baseurl, charges_by);
 
 
 // app.post('/checkParser', (req,res) => {
