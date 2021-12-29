@@ -20,8 +20,8 @@ app.get(baseurl, (req,res) => {
 // different file for different endpoints-services
 const passes_per_st = require('./passes_per_station.js');
 const passes_anal = require('./passes_analysis.js');
-// const passes_cost = require('./passes_cost.js');
-// const charges_by = require('./charges_by.js');
+const passes_cost = require('./passes_cost.js');
+const charges_by = require('./charges_by.js');
 
 //bind all endpoints to app router
 app.use(baseurl, passes_per_st);
