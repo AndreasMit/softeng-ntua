@@ -23,6 +23,18 @@ const passes_anal = require('./passes_analysis.js');
 const passes_cost = require('./passes_cost.js');
 const charges_by = require('./charges_by.js');
 
+///// added for admin /////////////////////
+const healthcheck = require('./admin/healthcheck.js');
+const resetpasses = require('./admin/resetpasses.js');
+const resetstations = require('./admin/resetstations.js');
+const resetvehicles = require('./admin/resetvehicles.js');
+
+app.use(baseurl, healthcheck);
+app.use(baseurl, resetpasses);
+app.use(baseurl, resetstations);
+app.use(baseurl, resetvehicles);
+//////////////////////////////////////////
+
 //bind all endpoints to app router
 app.use(baseurl, passes_per_st);
 app.use(baseurl, passes_anal);
