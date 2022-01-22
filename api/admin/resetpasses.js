@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 var mysql = require('mysql')
 const fs = require('fs');
+const axios = require('axios')
+
+const app = express();
 
 var conn = mysql.createConnection({
 	host: "softeng-db.mysql.database.azure.com", 
@@ -34,10 +37,10 @@ function resetp(req,res){
 	conn.query(myquery, function(err, result, fields){
 		if(err) throw err;
 		if(result.fieldCount == 0){
-			res.send("status":"OK")
+			res.send({"status":"OK"})
 		}
 		else{
-			res.send("status":"failed")
+			res.send({"status":"failed"})
 		}
 	});	
 	// conn.end();
@@ -47,5 +50,5 @@ conn.connect(function(err){
 	console.log("connected");
 });
 console.log("test");
-router.get('/admin/resetpasses', resetp);
+router.post('/admin/resetpasses', resetp)
 module.exports = router;
