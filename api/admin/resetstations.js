@@ -26,7 +26,7 @@ function resets(req,res){
 	 
 	// "set @row_number = 0; \
 	let myquery1 = "delete from Stations;";
-	let myquery2 = fs.readfile('/../../database/ddl/station.sql') 
+	let myquery2 = fs.readFileSync('../database/ddl/station.sql').toString();
 	console.log("queries setted")
 
 	// let limit = req.query.limit; //this is implemented in express module
@@ -44,6 +44,7 @@ function resets(req,res){
 			res.send({"status":"failed"})
 		}
 	});	
+	console.log(myquery2)
 	conn.query(myquery2, function(err, result, fields){
 	if(err) throw err;
 	if(result.fieldCount == 0){

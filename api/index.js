@@ -26,13 +26,13 @@ const charges_by = require('./charges_by.js');
 ///// added for admin /////////////////////
 const healthcheck = require('./admin/healthcheck.js');
 const resetpasses = require('./admin/resetpasses.js');
-// const resetstations = require('./admin/resetstations.js');
-// const resetvehicles = require('./admin/resetvehicles.js');
+const resetstations = require('./admin/resetstations.js');
+const resetvehicles = require('./admin/resetvehicles.js');
 
 app.use(baseurl, healthcheck);
 app.use(baseurl, resetpasses);
-// app.use(baseurl, resetstations);
-// app.use(baseurl, resetvehicles);
+app.use(baseurl, resetstations);
+app.use(baseurl, resetvehicles);
 //////////////////////////////////////////
 
 //bind all endpoints to app router
