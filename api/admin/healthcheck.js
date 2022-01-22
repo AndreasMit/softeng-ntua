@@ -12,15 +12,17 @@ function health_check(req,res){
 		database: "tollways", 
 		port: 3306 ,
 		ssl:{
-			ca: fs.readFileSync(__dirname + '/BaltimoreCyberTrustRoot.crt.pem')
+			ca: fs.readFileSync(__dirname + '/../BaltimoreCyberTrustRoot.crt.pem')
 		}
 	});
 	
 	if(conn.state === 'disconnected') {
-		return respond(null, {status: 'failed', dbconnection: 'connection_string'})
+		res.send({ status: 'OK' })
+		//router.get('/admin/healthcheck', {status: 'failed', dbconnection: 'connection_string'},health_check);
 	}
 	else {
-		return respond(null, {status: 'OK', dbconnection: 'connection_string'})
+		//router.get('/admin/healthcheck', {status: 'OK', dbconnection: 'connection_string'});
+		res.send({ status: 'failed' })
 	}
 }
 
