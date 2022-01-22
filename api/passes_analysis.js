@@ -33,7 +33,7 @@ function analysis(req,res){
 		P.charge as PassCharge\
 		from Passes as P inner join Stations as S\
 		on P.stationRef = S.stationID\
-		where S.stationProvider = '"+op1_ID+"' and P.hn = '"+op2_ID+"'\
+		where substring(S.stationID,1,2) = '"+op1_ID+"' and P.hn = '"+op2_ID+"'\
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('"+date_from+"', '%Y-%m-%d %H:%i') \
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('"+date_to+"', '%Y-%m-%d %H:%i')\
 		order by P.timestamp;";
