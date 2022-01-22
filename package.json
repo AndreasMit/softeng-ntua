@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/ntua/TL21-43/issues"
   },
-  "homepage": "https://github.com/ntua/TL21-43#readme"
+  "homepage": "https://github.com/ntua/TL21-43#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "mysql": "^2.18.1"
+  }
 }
