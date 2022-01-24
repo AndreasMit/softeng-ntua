@@ -3,6 +3,15 @@ const router = express.Router();
 var mysql = require('mysql')
 const fs = require('fs');
 
+const checkstation = (station) => {
+	const s = new Set(['AO', 'GF', 'EG', 'KO', 'MR', 'NE', 'OO']);
+	return (s.has(substring(station,0,2)))
+}
+
+const checkdate = (date) => {
+	return (date.length===8 && !isNaN(date))
+}
+
 function analysis(req,res){
 
 	var conn = mysql.createConnection({
@@ -18,12 +27,31 @@ function analysis(req,res){
 
 	conn.connect(function(err){
 		if(err) throw err;
-		console.log("connected");
 		let op1_ID = req.params['op1_ID'];
 		let op2_ID = req.params['op2_ID'];
 		let date_from = req.params['date_from'];
 		let date_to = req.params['date_to'];
-		 
+		if (!checkstation(op1_ID)) {
+			res.status(400)
+			res.send(new Error('Bad request: date_from not in parameters'))
+			return;
+		}
+		if (!checkstation(op2_ID)) {
+			res.status(400)
+			res.send(new Error('Bad request: date_from not in parameters'))
+			return;
+		}
+		if (!checkdate(date_from)) {
+			res.status(400)
+			res.send(new Error('Bad request: date_from not in parameters'))
+			return;
+		}
+		if (!checkdate(date_to)) {
+			res.status(400)
+			res.send(new Error('Bad request: date_to not in parameters'))
+			return;
+		}
+		
 		// "set @row_number = 0; \
 		let myquery = "select (@row_number:=@row_number + 1) AS PassIndex,\
 		P.passID as PassID, \
@@ -43,9 +71,18 @@ function analysis(req,res){
 		// if(limit==undefined || Number.isInteger(Number(limit))==false){}
 		// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	
-		console.log(myquery);
+// 		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){
-			if(err) throw err;
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error'))
+				throw err;
+			}
+			if (result.length===0) {
+				res.status(402)
+				res.send(new Error('No data'))
+				return;
+			}
 			res.send(result);
 		});
 	});

@@ -58,7 +58,7 @@ function resets(req,res){
 }
 conn.connect(function(err){
 	if(err) throw err;
-	console.log("connected");
+// 	console.log("connected");
 });
 // console.log("test");
 router.post('/admin/resetstations', resets)

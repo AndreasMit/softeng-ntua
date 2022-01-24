@@ -47,8 +47,8 @@ function resetp(req,res){
 }
 conn.connect(function(err){
 	if(err) throw err;
-	console.log("connected");
+// 	console.log("connected");
 });
-console.log("test");
+// console.log("test");
 router.post('/admin/resetpasses', resetp)
 module.exports = router;
