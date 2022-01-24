@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "53fc725f-f547-4b73-aeb9-1c8244cc4811",
+		"name": "Softeng",
+		"description": "# Introduction\n\nWhat does your API do?\n\nOur API handles requests towards our database and load new data regarding the interoperability of tolls.\n\n# Overview\n\nThings that the developers should know about:\n\nIn order to use our API you have to visit our domain made using Micosoft Azure for the cloud service and connect at port 9103 as shown below:\n\n[**http://tollways.westeurope.cloudapp.azure.com:9103/**](http://tollways.westeurope.cloudapp.azure.com:9103/)\n\nAll requests are available at (site)/interoperability/api which is out base url\n\nWe have created:\n\n(base url)/login\n\n(base url)/logout\n\n(base url)/admin/healthcheck\n\n(base url)/admin/resetpasses\n\n(base url)/admin/resetstations\n\n(base url)/admin/resetvehicles\n\n(baseURL)/PassesPerStation/:stationID/:date_from/:date_to\n\n(baseURL)/PassesPerStation/:stationID/:date_from/:date_to\n\n(baseURL)/ChargesBy/:op_ID/:date_from/:date_to  \n\n# Error Codes\n\nWhat errors and status codes can a user expect?\n\nEvery API request returns an HTTP staus code:\n\n200 ->Success\n\n400 -> Bad Request\n\n401 -> Not Authorized\n\n402 -> No data\n\n500 -> Internal server error",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/PassesPerStation/OO05/20201101/20211130",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/PassesPerStation/OO05/20201101/20211130",
+					"protocol": "http",
+					"host": [
+						"tollways",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesPerStation",
+						"OO05",
+						"20201101",
+						"20211130"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/ChargesBy/AO/20201101/20211130",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/ChargesBy/AO/20201101/20211130",
+					"protocol": "http",
+					"host": [
+						"tollways",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"ChargesBy",
+						"AO",
+						"20201101",
+						"20211130"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/PassesCost/AO/EG/20201101/20211130",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/PassesCost/AO/EG/20201101/20211130",
+					"protocol": "http",
+					"host": [
+						"tollways",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesCost",
+						"AO",
+						"EG",
+						"20201101",
+						"20211130"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/PassesAnalysis/AO/EG/20201101/20211130",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://tollways.westeurope.cloudapp.azure.com:9103/interoperability/api/PassesAnalysis/AO/EG/20201101/20211130",
+					"protocol": "http",
+					"host": [
+						"tollways",
+						"westeurope",
+						"cloudapp",
+						"azure",
+						"com"
+					],
+					"port": "9103",
+					"path": [
+						"interoperability",
+						"api",
+						"PassesAnalysis",
+						"AO",
+						"EG",
+						"20201101",
+						"20211130"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
