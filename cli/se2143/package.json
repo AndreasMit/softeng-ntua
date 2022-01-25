@@ -1,0 +1,20 @@
+{
+  "name": "se2143",
+  "version": "1.0.0",
+  "description": "Περιεχόμενα:",
+  "main": "bin/index.js",
+  "bin": {
+    "se2143": "bin/index.js"
+  },
+  "dependencies": {
+    "boxen": "^6.2.1",
+    "chalk": "^2.4.2",
+    "yargs": "^17.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
