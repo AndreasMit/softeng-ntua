@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const checkstation = (station) => {
 	const s = new Set(['AO', 'GF', 'EG', 'KO', 'MR', 'NE', 'OO']);
-	return (s.has(substring(station,0,2)))
+	return (s.has(station.substring(0,2)))
 }
 
 const checkdate = (date) => {
