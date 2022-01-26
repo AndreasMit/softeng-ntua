@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 var mysql = require('mysql')
 const fs = require('fs');
+const { parse } = require('json2csv')
 
 const checkstation = (station) => {
 	const s = new Set(['AO', 'GF', 'EG', 'KO', 'MR', 'NE', 'OO']);
@@ -89,11 +90,13 @@ function perStation(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-			res.send(result);
+			if(req.params['format'] === 'csv'){
+				res.send(parse(result))
+			}else{res.send(result)}
 		});
 	});
 	// conn.end();
 }
 
-router.get('/PassesPerStation/:stationID/:date_from/:date_to', perStation);
+router.get('/PassesPerStation/:stationID/:date_from/:date_to/:format?', perStation);
 module.exports = router;
