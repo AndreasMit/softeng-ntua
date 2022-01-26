@@ -89,7 +89,7 @@ function perStation(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-			console.log(result);
+			res.send(result);
 		});
 	});
 	// conn.end();
