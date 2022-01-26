@@ -3,6 +3,12 @@
 const chalk = require('chalk');  
 const axios = require("axios");
 const yargs = require('yargs')
+const https = require('https')
+const fs = require('fs')
+const csv = require('csv-parser');
+var mysql = require('mysql')
+
+axios.defaults.httpsAgent = new https.Agent({ rejectUnauthorized: false })
 
 const hello = chalk.hex('#83aaff')("This is the CLI for softeng team 43!")
 console.log(hello);
@@ -53,7 +59,7 @@ yargs.command({
       // Function for your command
       handler(argv) {
             // const url1 = 'http://localhost:9103/interoperability/api/PassesPerStation/AO01/20211101/20211130'
-            const url = 'http://localhost:9103/interoperability/api/PassesPerStation/'+argv.station+'/'+argv.datefrom+'/'+argv.to
+            const url = 'http://localhost:9103/interoperability/api/PassesPerStation/'+argv.station+'/'+argv.datefrom+'/'+argv.to+'&format='+argv.format
             console.log(url)
             axios.get(url)
             .then(res => {
@@ -97,11 +103,11 @@ yargs.command({
 
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/passesanalysis/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
+            const url = 'https://localhost:9103/interoperability/api/passesanalysis/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
             console.log(url)
             axios.get(url)
             .then(res => {
-                        console.log(res.data)
+                        console.log(res)
                   })
       }
 })
@@ -279,7 +285,7 @@ yargs.command({
             passesupd:{
                   describe: 'passes update',
                   demandOption: true,
-                  type:'string'
+                  type:'boolean'
             },
             source:{
                   describe: 'source csv file',
@@ -294,12 +300,49 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            
-            console.log('make create sql querie with the file Or add this functionality to API and then call it as above')
-            // axios.post(url)
-            // .then(res => {
-            //             console.log(res.data)
-            //       })
+            var conn = mysql.createConnection({
+                  host: "softeng-db.mysql.database.azure.com", 
+                  user: "softeng@softeng-db",
+                  password: "i6iNNUiu", 
+                  database: "tollways",
+                  port: 3306 ,
+                  ssl:{
+                        ca: fs.readFileSync(__dirname + '/BaltimoreCyberTrustRoot.crt.pem')
+                  }
+            });
+
+            var myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES "
+            fs.createReadStream(argv.source)
+            .pipe(csv())
+            .on('data', function (row) {
+                  const id = row.passID;
+                  const time = row.timestamp;
+                  const station = row.stationRef;
+                  const vehicle = row.vehicleRef;
+                  const chrge = row.charge;
+                  const hn = station.substring(0,2);
+                  const p = row.p;
+                  const status = row.status;
+                  const query = "('"+id+"','"+time+"','"+station+"','"+vehicle+"',"+chrge+",'"+station+"','"+vehicle+"','"+hn+"','"+p+"','"+status+"'),"
+                  myquery += query
+            })
+            .on('end', function () {
+                  myquery = myquery.substring(0, myquery.length - 1);
+                  myquery+=';';
+                  console.log(myquery);
+                  conn.query(myquery, function(err, result, fields){
+                  if(err) {
+                        console.log('Internal server error')
+                        throw err;
+                  }
+                  if (result.length===0) {
+                        console.log('No data')
+                        return;
+                  }
+                  console.log(result);
+            });
+            })
+           
       }
 })
 
