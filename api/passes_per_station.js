@@ -43,18 +43,18 @@ function perStation(req,res){
 		
 		if (!checkstation(station)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_from not in parameters'))
+			res.send(new Error('Bad request: invalid stationID'))
 			return;
 		}
 		
 		if (!checkdate(date_from)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_from not in parameters'))
+			res.send(new Error('Bad request: invalid date_from'))
 			return;
 		}
 		if (!checkdate(date_to)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_to not in parameters'))
+			res.send(new Error('Bad request: invalid date_to'))
 			return;
 		}
 		

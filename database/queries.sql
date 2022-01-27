@@ -52,3 +52,14 @@ where substring(S.stationID,1,2) = 'op_ID' and P.hn <> 'op_ID'
 and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('date_from', "%Y-%m-%d %H:%i") and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('date_to', "%Y-%m-%d %H:%i")
 group by P.hn
 order by VisitingOperator;
+
+-- e. {baseURL}/CostBy/:op_ID/:date_from/:date_to
+-----------------------------------------------------
+select substring(P.stationRef,1,2) as VisitedOperator,
+count(*) as NumberOfPasses,
+sum(P.charge) as PassesCost
+from Passes as P
+where P.hn = 'op_ID' and P.p = 'away'
+and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('date_from', "%Y-%m-%d %H:%i") and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('date_to', "%Y-%m-%d %H:%i")
+group by substring(P.stationRef,1,2)
+order by VisitedOperator;

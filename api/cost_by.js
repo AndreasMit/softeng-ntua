@@ -4,7 +4,6 @@ var mysql = require('mysql')
 const fs = require('fs');
 const { parse } = require('json2csv')
 
-
 const checkstation = (station) => {
 	const s = new Set(['AO', 'GF', 'EG', 'KO', 'MR', 'NE', 'OO']);
 	return (s.has(station.substring(0,2)))
@@ -14,7 +13,7 @@ const checkdate = (date) => {
 	return (date.length===8 && !isNaN(date))
 }
 
-function analysis(req,res){
+function cost(req,res){
 
 	var conn = mysql.createConnection({
 		host: "softeng-db.mysql.database.azure.com", 
@@ -29,20 +28,16 @@ function analysis(req,res){
 
 	conn.connect(function(err){
 		if(err) throw err;
-		let op1_ID = req.params['op1_ID'];
-		let op2_ID = req.params['op2_ID'];
+		let op_ID = req.params['op_ID'];
 		let date_from = req.params['date_from'];
 		let date_to = req.params['date_to'];
-		if (!checkstation(op1_ID)) {
+		
+		if (!checkstation(op_ID)) {
 			res.status(400)
-			res.send(new Error('Bad request: invalid op1_ID'))
+			res.send(new Error('Bad request: invalid op_ID'))
 			return;
 		}
-		if (!checkstation(op2_ID)) {
-			res.status(400)
-			res.send(new Error('Bad request: invalid op2_ID'))
-			return;
-		}
+
 		if (!checkdate(date_from)) {
 			res.status(400)
 			res.send(new Error('Bad request: invalid date_from'))
@@ -53,25 +48,17 @@ function analysis(req,res){
 			res.send(new Error('Bad request: invalid date_to'))
 			return;
 		}
-		
+
 		// "set @row_number = 0; \
-		let myquery = "select (@row_number:=@row_number + 1) AS PassIndex,\
-		P.passID as PassID, \
-		P.stationRef as StationID,\
-		P.timestamp as PassTimeStamp,\
-		P.vehicleRef as VehicleID,\
-		P.charge as PassCharge\
-		from Passes as P inner join Stations as S\
-		on P.stationRef = S.stationID\
-		where substring(S.stationID,1,2) = '"+op1_ID+"' and P.hn = '"+op2_ID+"'\
+		let myquery = "select substring(P.stationRef,1,2) as VisitedOperator,\
+		count(*) as NumberOfPasses,\
+		sum(P.charge) as PassesCost\
+		from Passes as P\
+		where P.hn = '"+op_ID+"' and P.p = 'away'\
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('"+date_from+"', '%Y-%m-%d %H:%i') \
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('"+date_to+"', '%Y-%m-%d %H:%i')\
-		order by P.timestamp;";
-
-		// let limit = req.query.limit; //this is implemented in express module
-		// // console.log(limit);
-		// if(limit==undefined || Number.isInteger(Number(limit))==false){}
-		// else{ myquery = myquery + " LIMIT " + Number(limit); }
+		group by substring(P.stationRef,1,2)\
+		order by VisitedOperator;";
 	
 // 		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){
@@ -85,7 +72,6 @@ function analysis(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-
 			if(req.params['format'] === 'csv'){
 				res.send(parse(result))
 			}else{res.send(result)}
@@ -94,5 +80,5 @@ function analysis(req,res){
 	// conn.end();
 }
 
-router.get('/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to/:format?', analysis);
+router.get('/CostBy/:op_ID/:date_from/:date_to/:format?', cost);
 module.exports = router;
