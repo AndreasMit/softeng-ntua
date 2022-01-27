@@ -54,7 +54,9 @@ function insert(req,res){
 			if(err) {
 				res.status(500)
 				res.send(new Error('Internal server error'))
-				throw err;
+				// throw err;
+				console.log('Duplicate Entry');
+				return;
 			}
 			if (result.length===0) {
 				res.status(402)
@@ -73,4 +75,6 @@ function insert(req,res){
 }
 
 router.get('/Insert/:passID/:date/:stationID/:vehicleID/:charge/:visitingOperator/:homeaway', insert);
+//testing
+//http://localhost:9103/interoperability/api/Insert/TOB7336760/1120190137/OO12/AT19HLV57173/2.8/OO/home/
 module.exports = router;
