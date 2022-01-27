@@ -61,10 +61,6 @@ function charges(req,res){
 		group by P.hn\
 		order by VisitingOperator;";
 
-		// let limit = req.query.limit; //this is implemented in express module
-		// // console.log(limit);
-		// if(limit==undefined || Number.isInteger(Number(limit))==false){}
-		// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	
 // 		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){

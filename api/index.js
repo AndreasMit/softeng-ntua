@@ -28,6 +28,8 @@ const passes_per_st = require('./passes_per_station.js');
 const passes_anal = require('./passes_analysis.js');
 const passes_cost = require('./passes_cost.js');
 const charges_by = require('./charges_by.js');
+const cost_by = require('./cost_by.js');
+const insert = require('./insert.js');
 
 ///// added for admin /////////////////////
 const healthcheck = require('./admin/healthcheck.js');
@@ -46,6 +48,8 @@ app.use(baseurl, passes_per_st);
 app.use(baseurl, passes_anal);
 app.use(baseurl, passes_cost);
 app.use(baseurl, charges_by);
+app.use(baseurl, cost_by);
+app.use(baseurl, insert);
 
 
 // app.post('/checkParser', (req,res) => {

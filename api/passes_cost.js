@@ -35,22 +35,22 @@ function cost(req,res){
 		
 		if (!checkstation(op1_ID)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_from not in parameters'))
+			res.send(new Error('Bad request: invalid op1_ID'))
 			return;
 		}
 		if (!checkstation(op2_ID)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_from not in parameters'))
+			res.send(new Error('Bad request: invalid op2_ID'))
 			return;
 		}
 		if (!checkdate(date_from)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_from not in parameters'))
+			res.send(new Error('Bad request: invalid date_from'))
 			return;
 		}
 		if (!checkdate(date_to)) {
 			res.status(400)
-			res.send(new Error('Bad request: date_to not in parameters'))
+			res.send(new Error('Bad request: invalid date_to'))
 			return;
 		}
 		
