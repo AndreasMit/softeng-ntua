@@ -48,7 +48,7 @@ count(*) as NumberOfPasses,
 sum(P.charge) as PassesCost
 from Passes as P inner join Stations as S
 on P.stationRef = S.stationID
-where substring(S.stationID,1,2) = 'op1_ID' and P.hn <> 'op_ID'
+where substring(S.stationID,1,2) = 'op_ID' and P.hn <> 'op_ID'
 and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('date_from', "%Y-%m-%d %H:%i") and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('date_to', "%Y-%m-%d %H:%i")
 group by P.hn
 order by VisitingOperator;
