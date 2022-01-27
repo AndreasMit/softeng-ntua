@@ -102,7 +102,7 @@ function perStation(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-			if(req.params['format'] === 'csv'){
+			if(req.query.format === 'csv'){
 				res.send(parse(result))
 			}else{res.send(result)}
 		});
@@ -110,5 +110,5 @@ function perStation(req,res){
 	// conn.end();
 }
 
-router.get('/PassesPerStation/:stationID/:date_from/:date_to/:format?', perStation);
+router.get('/PassesPerStation/:stationID/:date_from/:date_to', perStation);
 module.exports = router;

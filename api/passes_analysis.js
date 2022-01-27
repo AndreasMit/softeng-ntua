@@ -97,8 +97,7 @@ function analysis(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-
-			if(req.params['format'] === 'csv'){
+			if(req.query.format === 'csv'){
 				res.send(parse(result))
 			}else{res.send(result)}
 		});
@@ -106,5 +105,5 @@ function analysis(req,res){
 	// conn.end();
 }
 
-router.get('/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to/:format?', analysis);
+router.get('/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to', analysis);
 module.exports = router;

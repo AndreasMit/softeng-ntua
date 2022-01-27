@@ -62,7 +62,7 @@ function insert(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-			if(req.params['format'] === 'csv'){
+			if(req.query.format === 'csv'){
 				res.send(parse(result))
 			}
 			else {
@@ -73,5 +73,5 @@ function insert(req,res){
 	// conn.end();
 }
 
-router.get('/Insert/:passID/:date/:stationID/:vehicleID/:charge/:visitingOperator/:homeaway/:format?', insert);
+router.get('/Insert/:passID/:date/:stationID/:vehicleID/:charge/:visitingOperator/:homeaway', insert);
 module.exports = router;

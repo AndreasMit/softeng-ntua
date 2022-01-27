@@ -82,7 +82,7 @@ function cost(req,res){
 				res.send(new Error('No data'))
 				return;
 			}
-			if(req.params['format'] === 'csv'){
+			if(req.query.format === 'csv'){
 				res.send(parse(result))
 			}else{res.send(result)}
 		});
@@ -90,5 +90,5 @@ function cost(req,res){
 	// conn.end();
 }
 
-router.get('/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to/:format?', cost);
+router.get('/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to', cost);
 module.exports = router;
