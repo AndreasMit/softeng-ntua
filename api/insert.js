@@ -50,7 +50,6 @@ function insert(req,res){
 		}
 		let myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES ('"+id+"','"+time+"','"+station+"','"+vehicle+"',"+chrge+",'"+station+"','"+vehicle+"','"+hn+"','"+p+"','"+status+"');";
 	
-// 		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){
 			if(err) {
 				res.status(500)
