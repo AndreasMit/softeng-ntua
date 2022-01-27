@@ -2,14 +2,20 @@ const express = require('express');
 const app = express();
 const port = 9103;
 var path = require('path');
+const fs = require('fs')
 // const bodyparser = require('body-parser') //middleware for using json format
+
+//support Secure connection with self signed certificate
+const https = require('https');
+var options = {
+    key: fs.readFileSync('./ssl/server.key'),
+    cert: fs.readFileSync('./ssl/server.cert'),
+};
+var server = https.createServer(options, app).listen(port,() => { console.log('app listening on port', port);} );
 
 baseurl = '/interoperability/api';
 
 // app.use(bodyparser.json())
-
-app.listen(port,() => { console.log('app listening on port', port);} );
-
 // app.get(baseurl, (req,res) => { res.send("hello world")} );
 
 //send html file

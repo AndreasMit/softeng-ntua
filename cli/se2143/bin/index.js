@@ -3,12 +3,12 @@
 const chalk = require('chalk');  
 const axios = require("axios");
 const yargs = require('yargs')
-const https = require('https')
 const fs = require('fs')
 const csv = require('csv-parser');
 var mysql = require('mysql')
 
-axios.defaults.httpsAgent = new https.Agent({ rejectUnauthorized: false })
+const https = require('https')
+const httpsAgent = new https.Agent({ rejectUnauthorized: false })
 
 const hello = chalk.hex('#83aaff')("This is the CLI for softeng team 43!")
 console.log(hello);
@@ -59,9 +59,9 @@ yargs.command({
       // Function for your command
       handler(argv) {
             // const url1 = 'http://localhost:9103/interoperability/api/PassesPerStation/AO01/20211101/20211130'
-            const url = 'http://localhost:9103/interoperability/api/PassesPerStation/'+argv.station+'/'+argv.datefrom+'/'+argv.to+'&format='+argv.format
+            const url = 'https://localhost:9103/interoperability/api/PassesPerStation/'+argv.station+'/'+argv.datefrom+'/'+argv.to//+'&format='+argv.format
             console.log(url)
-            axios.get(url)
+            axios.get(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -105,9 +105,9 @@ yargs.command({
       handler(argv) {
             const url = 'https://localhost:9103/interoperability/api/passesanalysis/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
             console.log(url)
-            axios.get(url)
+            axios.get(url,{ httpsAgent })
             .then(res => {
-                        console.log(res)
+                        console.log(res.data)
                   })
       }
 })
@@ -146,9 +146,9 @@ yargs.command({
 
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/PassesCost/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
+            const url = 'https://localhost:9103/interoperability/api/PassesCost/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
             console.log(url)
-            axios.get(url)
+            axios.get(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -184,9 +184,9 @@ yargs.command({
 
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/ChargesBy/'+argv.op1+'/'+argv.from+'/'+argv.to
+            const url = 'https://localhost:9103/interoperability/api/ChargesBy/'+argv.op1+'/'+argv.from+'/'+argv.to
             console.log(url)
-            axios.get(url)
+            axios.get(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -207,9 +207,9 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/admin/healthcheck';
+            const url = 'https://localhost:9103/interoperability/api/admin/healthcheck';
             console.log(url)
-            axios.get(url)
+            axios.get(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -227,9 +227,9 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/admin/resetpasses';
+            const url = 'https://localhost:9103/interoperability/api/admin/resetpasses';
             console.log(url)
-            axios.post(url)
+            axios.post(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -247,9 +247,9 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/admin/resetstations';
+            const url = 'https://localhost:9103/interoperability/api/admin/resetstations';
             console.log(url)
-            axios.post(url)
+            axios.post(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -267,9 +267,9 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'http://localhost:9103/interoperability/api/admin/resetvehicles';
+            const url = 'https://localhost:9103/interoperability/api/admin/resetvehicles';
             console.log(url)
-            axios.post(url)
+            axios.post(url,{ httpsAgent })
             .then(res => {
                         console.log(res.data)
                   })
@@ -289,11 +289,6 @@ yargs.command({
             },
             source:{
                   describe: 'source csv file',
-                  demandOption: true,
-                  type:'string'
-            },
-            format:{
-                  describe: 'format',
                   demandOption: true,
                   type:'string'
             }
