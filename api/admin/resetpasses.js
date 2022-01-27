@@ -24,7 +24,7 @@ function resetp(req,res){
 	// let date_from = req.params['date_from'];
 	// let date_to = req.params['date_to'];
 	 
-	// "set @row_number = 0; \
+
 	let myquery = "delete from Passes;"; 
 
 

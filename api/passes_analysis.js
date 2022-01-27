@@ -54,7 +54,7 @@ function analysis(req,res){
 			return;
 		}
 		
-		// "set @row_number = 0; \
+		let aux_query = 'set @row_number = 0;'
 		let myquery = "select (@row_number:=@row_number + 1) AS PassIndex,\
 		P.passID as PassID, \
 		P.stationRef as StationID,\
@@ -74,6 +74,18 @@ function analysis(req,res){
 		// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	
 // 		console.log(myquery);
+		conn.query(aux_query, function(err, result, fields){
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error: aux q failed'))
+				throw err;
+			}
+			if (result.length===0) {
+				res.status(402)
+				res.send(new Error('No data'))
+				return;
+			}
+		});
 		conn.query(myquery, function(err, result, fields){
 			if(err) {
 				res.status(500)

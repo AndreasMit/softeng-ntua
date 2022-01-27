@@ -49,7 +49,7 @@ function charges(req,res){
 			return;
 		}
 		
-		// "set @row_number = 0; \
+		
 		let myquery = "select P.hn as VisitingOperator,\
 		count(*) as NumberOfPasses,\
 		sum(P.charge) as PassesCost\

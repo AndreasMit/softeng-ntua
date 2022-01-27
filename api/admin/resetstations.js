@@ -24,7 +24,6 @@ function resets(req,res){
 	// let date_from = req.params['date_from'];
 	// let date_to = req.params['date_to'];
 	 
-	// "set @row_number = 0; \
 	let myquery1 = "delete from Stations;";
 	let myquery2 = fs.readFileSync('../database/ddl/station.sql').toString();
 	console.log("queries setted")

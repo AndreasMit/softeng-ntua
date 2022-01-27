@@ -54,7 +54,7 @@ function cost(req,res){
 			return;
 		}
 		
-		// "set @row_number = 0; \
+		
 		let myquery = "select count(*) as NumberOfPasses,\
 		sum(P.charge) as PassesCost\
 		from Passes as P inner join Stations as S\
@@ -70,6 +70,7 @@ function cost(req,res){
 		// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	
 // 		console.log(myquery);
+		
 		conn.query(myquery, function(err, result, fields){
 			if(err) {
 				res.status(500)

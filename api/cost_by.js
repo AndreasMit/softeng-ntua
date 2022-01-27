@@ -49,7 +49,7 @@ function cost(req,res){
 			return;
 		}
 
-		// "set @row_number = 0; \
+		
 		let myquery = "select substring(P.stationRef,1,2) as VisitedOperator,\
 		count(*) as NumberOfPasses,\
 		sum(P.charge) as PassesCost\
@@ -61,6 +61,7 @@ function cost(req,res){
 		order by VisitedOperator;";
 	
 // 		console.log(myquery);
+		
 		conn.query(myquery, function(err, result, fields){
 			if(err) {
 				res.status(500)
