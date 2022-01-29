@@ -59,7 +59,7 @@ yargs.command({
       // Function for your command
       handler(argv) {
             // const url1 = 'http://localhost:9103/interoperability/api/PassesPerStation/AO01/20211101/20211130'
-            const url = 'https://localhost:9103/interoperability/api/PassesPerStation/'+argv.station+'/'+argv.datefrom+'/'+argv.to//+'&format='+argv.format
+            const url = 'https://localhost:9103/interoperability/api/PassesPerStation/'+argv.station+'/'+argv.datefrom+'/'+argv.to+'?format='+argv.format
             console.log(url)
             axios.get(url,{ httpsAgent })
             .then(res => {
@@ -103,7 +103,7 @@ yargs.command({
 
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/passesanalysis/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
+            const url = 'https://localhost:9103/interoperability/api/passesanalysis/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to+'?format='+argv.format
             console.log(url)
             axios.get(url,{ httpsAgent })
             .then(res => {
@@ -146,7 +146,7 @@ yargs.command({
 
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/PassesCost/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to
+            const url = 'https://localhost:9103/interoperability/api/PassesCost/'+argv.op1+'/'+argv.op2+'/'+argv.from+'/'+argv.to+'?format='+argv.format
             console.log(url)
             axios.get(url,{ httpsAgent })
             .then(res => {
@@ -184,7 +184,7 @@ yargs.command({
 
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/ChargesBy/'+argv.op1+'/'+argv.from+'/'+argv.to
+            const url = 'https://localhost:9103/interoperability/api/ChargesBy/'+argv.op1+'/'+argv.from+'/'+argv.to+'?format='+argv.format
             console.log(url)
             axios.get(url,{ httpsAgent })
             .then(res => {
@@ -207,7 +207,7 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/admin/healthcheck';
+            const url = 'https://localhost:9103/interoperability/api/admin/healthcheck'+'?format='+argv.format;
             console.log(url)
             axios.get(url,{ httpsAgent })
             .then(res => {
@@ -227,7 +227,7 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/admin/resetpasses';
+            const url = 'https://localhost:9103/interoperability/api/admin/resetpasses'+'?format='+argv.format;
             console.log(url)
             axios.post(url,{ httpsAgent })
             .then(res => {
@@ -247,7 +247,7 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/admin/resetstations';
+            const url = 'https://localhost:9103/interoperability/api/admin/resetstations'+'?format='+argv.format;
             console.log(url)
             axios.post(url,{ httpsAgent })
             .then(res => {
@@ -267,7 +267,7 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            const url = 'https://localhost:9103/interoperability/api/admin/resetvehicles';
+            const url = 'https://localhost:9103/interoperability/api/admin/resetvehicles'+'?format='+argv.format;
             console.log(url)
             axios.post(url,{ httpsAgent })
             .then(res => {
