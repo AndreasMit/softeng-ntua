@@ -74,7 +74,7 @@ function insert(req,res){
 	// conn.end();
 }
 
-router.get('/insert/:passID/:date/:stationID/:vehicleID/:charge/:visitingOperator/:homeaway', insert);
+router.get('/Insert/:passID/:date/:stationID/:vehicleID/:charge/:visitingOperator/:homeaway', insert);
 //testing
 //http://localhost:9103/interoperability/api/Insert/TOB7336760/1120190137/OO12/AT19HLV57173/2.8/OO/home/
 module.exports = router;

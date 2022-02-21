@@ -34,7 +34,17 @@ class NewPass extends React.Component {
   	}
   	else{
   		this.State( {error: 'not all fields were correctly filled'})
-  	} 
+  	}
+    this.setState({
+      passID: "lol",
+      timestamp: "",
+      stationRef: "",
+      vehicleRef: "",
+      charge: "",
+      hn: "",
+      homeaway: "home",
+      error : null}
+      )
   }
   
   HandleUserInput(e){
@@ -52,6 +62,10 @@ class NewPass extends React.Component {
       	//maybe calendar for timestamp
       	// radio button for home away
       	//maybe radio for station ref and hn
+        //eleghos ypoloipoy
+        //cash if not enought money -> alert and not proceed
+        // local store if no internet connection??
+        // update balance for the vehicle!!
       <div className='new-form'>
       	<h2> Insert new pass data </h2>
       	<form>
