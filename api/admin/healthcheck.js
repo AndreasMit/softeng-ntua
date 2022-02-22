@@ -29,7 +29,7 @@ function health_check(req,res){
 }})
 	}
 }
-conn.connect(function(err){});
+// conn.connect(function(err){});
 
 router.get('/admin/healthcheck', health_check);
 module.exports = router;

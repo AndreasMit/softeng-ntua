@@ -56,10 +56,10 @@ function resets(req,res){
 });	
 	conn.end();
 }
-conn.connect(function(err){
-	if(err) throw err;
-// 	console.log("connected");
-});
+// conn.connect(function(err){
+// 	if(err) throw err;
+// // 	console.log("connected");
+// });
 // console.log("test");
 router.post('/admin/resetstations', resets)
 module.exports = router;

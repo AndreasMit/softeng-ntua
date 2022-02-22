@@ -90,23 +90,9 @@ class ClearDebt extends React.Component {
     else{
     console.log("chargesby")
     GetChargesBy(this.state)
-    .then( res => {
-            if(res==={}){
-              this.setState({
-              error: "No data"
-              });
-              return
-            }
-            res.json()
-      })
+    .then( res => res.json())
     .then(
         (result) => {
-          if(result==={}){
-              this.setState({
-              error: "No data"
-              });
-              return
-            }
           console.log(result)
           this.setState({
             chargesby: result
@@ -129,23 +115,9 @@ class ClearDebt extends React.Component {
     }
     else{
     GetCostBy(this.state)
-    .then( res => {
-            if(res==={}){
-              this.setState({
-              error: "No data"
-              });
-              return
-            }
-            res.json()
-      })
+    .then( res => res.json() )
     .then(
         (result) => {
-          if(result==={}){
-              this.setState({
-              error: "No data"
-              });
-              return
-            }
           this.setState({
             costby: result
           });
