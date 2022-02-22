@@ -3,7 +3,7 @@ const router = express.Router();
 var mysql = require('mysql')
 const fs = require('fs');
 const { parse } = require('json2csv')
-const config = require('./config.js')
+const config = require('./config')
 
 const checkstation = (station) => {
 	const s = new Set(['AO', 'GF', 'EG', 'KO', 'MR', 'NE', 'OO']);
@@ -23,7 +23,7 @@ function charges(req,res){
 		database: config.database, 
 		port: config.port,
 		ssl:{
-			ca: fs.readFileSync(config.ssl)
+			ca: fs.readFileSync(__dirname + config.ssl)
 		}
 	});
 

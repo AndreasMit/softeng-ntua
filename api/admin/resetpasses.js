@@ -3,19 +3,20 @@ const router = express.Router();
 var mysql = require('mysql')
 const fs = require('fs');
 const axios = require('axios')
+const config = require('../config')
 
 const app = express();
 
 var conn = mysql.createConnection({
-	host: "softeng-db.mysql.database.azure.com", 
-	user: "softeng@softeng-db",
-	password: "i6iNNUiu", 
-	database: "tollways", 
-	port: 3306 ,
-	ssl:{
-		ca: fs.readFileSync(__dirname + '/../BaltimoreCyberTrustRoot.crt.pem')
-	}
-});
+		host: config.host, 
+		user: config.user,
+		password: config.password, 
+		database: config.database, 
+		port: config.port,
+		ssl:{
+			ca: fs.readFileSync(__dirname + '/..' +config.ssl)
+		}
+	});
 
 function resetp(req,res){
 

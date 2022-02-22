@@ -2,7 +2,9 @@ const express = require('express');
 const app = express();
 const port = 9103;
 var path = require('path');
-const fs = require('fs')
+const fs = require('fs');
+const cors = require('cors');
+
 // const bodyparser = require('body-parser') //middleware for using json format
 
 //support Secure connection with self signed certificate
@@ -36,6 +38,10 @@ const healthcheck = require('./admin/healthcheck.js');
 const resetpasses = require('./admin/resetpasses.js');
 const resetstations = require('./admin/resetstations.js');
 const resetvehicles = require('./admin/resetvehicles.js');
+
+//enable cors from frontend running anywhere
+app.use(cors())
+
 
 app.use(baseurl, healthcheck);
 app.use(baseurl, resetpasses);

@@ -1,22 +1,67 @@
 import React from 'react';
 import { GetCostBy, GetChargesBy } from "./api";
 import Table from './Table';
+import Select from 'react-select'
 
 class ClearDebt extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      opid: "OK",
-      datefrom: "",
-      dateto: "",
-      chargesby: [{'h1': 5 , 'h2': 13, 'h3':45}],
-      costby: [{'h1': 6 , 'h2': 12, 'h3':35}],
+      opid: "EG",
+      datefrom: "2021-11-01",
+      dateto: "2021-11-30",
+      chargesby: [{}],
+      costby: [{}],
+      total1: null,
+      total2: null,
+      total: null,
       error: null
     }
+    this.operators = 
+    [
+      { value: "AO", label:"AO", name:"opid"},
+      { value: "GF", label:"GF", name:"opid"},
+      { value: "EG", label:"EG", name:"opid"},
+      { value: "KO", label:"KO", name:"opid"},
+      { value: "MR", label:"MR", name:"opid"},
+      { value: "NE", label:"NE", name:"opid"},
+      { value: "OO", label:"OO", name:"opid"}
+    ]
+
     this.HandleUserInput = this.HandleUserInput.bind(this);
     this.HandleClearDebt = this.HandleClearDebt.bind(this);
     this.Charge = this.Charge.bind(this);
     this.Cost = this.Cost.bind(this);
+    this.ComputeTotal1 = this.ComputeTotal1.bind(this);
+    this.ComputeTotal2 = this.ComputeTotal2.bind(this);
+    this.ComputeTotal = this.ComputeTotal.bind(this);
+    this.HandleSelectInput = this.HandleSelectInput.bind(this);
+  }
+
+  ComputeTotal1(){
+    var items = this.state.chargesby;
+    var counter = 0;
+    items.forEach( item => {
+      counter += item.PassesCost 
+    });
+    this.setState({total1: counter})
+  }
+  ComputeTotal2(){
+    var items = this.state.costby;
+    var counter = 0;
+    items.forEach( item => {
+      counter += item.PassesCost 
+    });
+    this.setState({total2: counter})
+  }
+  ComputeTotal(){
+    var total1 = this.state.total1;
+    var total2 = this.state.total2;
+    console.log(total2);
+    console.log(total1);
+    var sub = total1 - total2
+    console.log(sub)
+    this.setState({total: sub.toFixed(2)})
   }
 
   HandleUserInput(e){
@@ -25,73 +70,131 @@ class ClearDebt extends React.Component {
     this.setState({ [name] : value }); 
     console.log(this.state);
   }
+
+  HandleSelectInput(e){
+    const name = e.name;
+    const value = e.value;
+    this.setState({ [name] : value }); 
+    console.log(this.state);
+  }
+
   HandleClearDebt(){
     //request to api to make unpaid to paid for the days specified
     console.log('nothing yet')
   }
 
   Charge(){
+    if(this.state.dateto < this.state.datefrom){
+      this.setState({error: 'date_to should be later than date_from'})
+    }
+    else{
     console.log("chargesby")
-    var k = GetChargesBy(this.state);
-    console.log(k)
-    console.log(this.state)
-    this.setState({chargesby: k})
+    GetChargesBy(this.state)
+    .then( res => {
+            if(res==={}){
+              this.setState({
+              error: "No data"
+              });
+              return
+            }
+            res.json()
+      })
+    .then(
+        (result) => {
+          if(result==={}){
+              this.setState({
+              error: "No data"
+              });
+              return
+            }
+          console.log(result)
+          this.setState({
+            chargesby: result
+          });
+          this.ComputeTotal1();
+        },
+        (error)=> {
+          this.setState({
+            error: error
+          });
+        }
+      )
+    }
   }
 
   Cost(){
     console.log("cost");
-    var k = GetCostBy(this.state);
-    console.log(k)
-    // this.state.costby = k;
-    this.setState({costby: k})
-    console.log(this.state)
-    // this.setState( {
-    //       costby: k,
-    //       error: null
-    //        });
-    
-    // .then(json=> {
-    //     setTimeout( () => {
-    //       this.setState( {
-    //         costby: json,
-    //         error: null
-    //       });
-    //       }, 0);
-    // })
-    // .catch( err => {
-    //   this.setState({error:err})
-    // })
+    if(this.state.dateto < this.state.datefrom){
+      this.setState({error: 'date to should be later than date from'})
+    }
+    else{
+    GetCostBy(this.state)
+    .then( res => {
+            if(res==={}){
+              this.setState({
+              error: "No data"
+              });
+              return
+            }
+            res.json()
+      })
+    .then(
+        (result) => {
+          if(result==={}){
+              this.setState({
+              error: "No data"
+              });
+              return
+            }
+          this.setState({
+            costby: result
+          });
+          this.ComputeTotal2();
+        },
+        (error)=> {
+          this.setState({
+            error: error
+          });
+        }
+      )
+    }
   }
 
 
 
   render(){
     return (
-      //choose dates if not show for all
-      //show statistics or just the data 
-      //show result of owed and being owed money
+      //choose dates if not show for all 
       //pay or receive 
       //suppose no overllaping periods and then set everything as paid
       //in the database per month
       <div className='clear-debt'>
 			 <h1> Information about passes for different stations </h1>
+        
         <p> I am operator (instead of login): </p>
-        <input type="opid" field='opid' placeholder="eg KO" value={this.state.opid} onChange={this.HandleUserInput} />
+        <Select  options={this.operators} type="opid" name="opid"  field='opid' onChange={this.HandleSelectInput} />
 
-        <p> Choose a period of time (months) </p><br/>
+        <p> Choose a period of time (months) </p>
         <label htmlFor="datefrom">From: </label>
-        <input type="datefrom" field="datefrom" placeholder="dd/mm/yy" value={this.state.datefrom} onChange={this.HandleUserInput} />
+        <input type="date" name="datefrom" field="datefrom"  value={this.state.datefrom} onChange={this.HandleUserInput} />
         <label htmlFor="dateto">To: </label>
-        <input type="dateto" field="dateto" placeholder="dd/mm/yy" value={this.state.dateto} onChange={this.HandleUserInput} />
-
+        <input type="date" name="dateto" field="dateto" value={this.state.dateto} onChange={this.HandleUserInput} />
+        
+        <div className='error'> {this.state.error} </div> 
         <button name="compute" onClick={ ()=> {this.Cost(); this.Charge()}}> Compute debt </button>
         
-        <h2> Money you owe to other stations </h2>
-          <Table data={this.state.chargesby} />
-        
         <h2> Money other stations owe you </h2>
+          <Table data={this.state.chargesby} />
+          <p> Total money owed: {this.state.total1} </p>
+
+        
+        <h2> Money you owe to other stations </h2>
           <Table data={this.state.costby} />
+          <p> Total money you owe: {this.state.total2} </p>
 			 
+       <button name= 'compute total' onClick={this.ComputeTotal}> Compute Total </button>
+       <p> You need to receive or pay :{this.state.total} </p>
+       <br />
        <button name="transact" onClick={this.HandleClearDebt}> Pay or Receive money </button>
 		  </div>
     );
@@ -99,3 +202,5 @@ class ClearDebt extends React.Component {
 }
 
 export default ClearDebt;
+
+    

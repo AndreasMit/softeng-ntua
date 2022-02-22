@@ -3,6 +3,7 @@ const router = express.Router();
 var mysql = require('mysql')
 const fs = require('fs');
 const { parse } = require('json2csv')
+const config = require('./config')
 
 const checkstation = (station) => {
 	const s = new Set(['AO', 'GF', 'EG', 'KO', 'MR', 'NE', 'OO']);
@@ -25,13 +26,13 @@ const checkdate = (date) => {
 function perStation(req,res){
 
 	var conn = mysql.createConnection({
-		host: "softeng-db.mysql.database.azure.com", 
-		user: "softeng@softeng-db",
-		password: "i6iNNUiu", 
-		database: "tollways",
-		port: 3306 ,
+		host: config.host, 
+		user: config.user,
+		password: config.password, 
+		database: config.database, 
+		port: config.port,
 		ssl:{
-			ca: fs.readFileSync(__dirname + '/BaltimoreCyberTrustRoot.crt.pem')
+			ca: fs.readFileSync(__dirname + config.ssl)
 		}
 	});
 
