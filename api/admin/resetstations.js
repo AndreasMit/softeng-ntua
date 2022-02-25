@@ -6,7 +6,11 @@ const axios = require('axios')
 const config = require('../config')
 const app = express();
 
-var conn = mysql.createConnection({
+
+
+function resets(req,res){
+
+	 var conn = mysql.createConnection({
 		host: config.host, 
 		user: config.user,
 		password: config.password, 
@@ -17,35 +21,43 @@ var conn = mysql.createConnection({
 		}
 	});
 
-function resets(req,res){
-	 
 	conn.connect(function(err){
 		// if(err) throw err;
 
 		let myquery1 = "delete from Stations;";
 		let myquery2 = fs.readFileSync('../database/dml/station.sql').toString();
 
+<<<<<<< Updated upstream
 // 		console.log(myquery1);
+=======
+		//console.log(myquery1);
+>>>>>>> Stashed changes
 		conn.query(myquery1, function(err, result, fields){
-			if(err) throw err;
-// 		if(result.fieldCount == 0){
-// 			res.send({"status":"OK"})
-// 		}
-// 		else{
-// 			res.send({"status":"failed"})
-// 		}
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error: aux q failed'))
+				return;
+			}
+			
+
+		});
+		conn.query(myquery2, function(err, result, fields){
+			conn.end();
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error'))
+				return;
+			}
+			// console.log(result);
+			if (result.fieldCount===0) {
+				res.send({"status":"OK"})
+				return;
+			}
+			else{
+				res.send({"status":"failed"})
+			}
+		});	
 	});
-	conn.query(myquery2, function(err, result, fields){
-		conn.end();
-		if(err) throw err;
-		if(result.fieldCount == 0){
-			res.send({"status":"OK"})
-		}
-		else{
-			res.send({"status":"failed"})
-		}
-	});	
-})
 	
 }
 router.post('/admin/resetstations', resets)

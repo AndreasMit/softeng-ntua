@@ -4,7 +4,11 @@ var mysql = require('mysql')
 const fs = require('fs');
 const config = require('../config')
 
-var conn = mysql.createConnection({
+
+
+function health_check(req,res){
+
+	var conn = mysql.createConnection({
 		host: config.host, 
 		user: config.user,
 		password: config.password, 
@@ -15,7 +19,6 @@ var conn = mysql.createConnection({
 		}
 	});
 
-function health_check(req,res){
 	conn.connect(function(err){
 
 		if(conn.state === 'disconnected') {
