@@ -325,6 +325,8 @@ yargs.command({
             .on('end', function () {
                   myquery = myquery.substring(0, myquery.length - 1);
                   myquery+=';';
+// 				  console.log(myquery);
+                  
                   conn.query(myquery, function(err, result, fields){
                   if(err) {
                         console.log('Internal server error')
@@ -334,7 +336,7 @@ yargs.command({
                         console.log('No data')
                         return;
                   }
-//                   console.log(result);
+
                   conn.end();
                   return;
             });

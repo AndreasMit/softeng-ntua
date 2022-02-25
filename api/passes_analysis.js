@@ -58,7 +58,7 @@ function analysis(req,res){
 		let myquery = "select (@row_number:=@row_number + 1) AS PassIndex,\
 		P.passID as PassID, \
 		P.stationRef as StationID,\
-		P.timestamp as PassTimeStamp,\
+		STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') as PassTimeStamp, \
 		P.vehicleRef as VehicleID,\
 		P.charge as PassCharge\
 		from Passes as P inner join Stations as S\
@@ -67,11 +67,6 @@ function analysis(req,res){
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('"+date_from+"', '%Y-%m-%d %H:%i') \
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('"+date_to+"', '%Y-%m-%d %H:%i')\
 		order by P.timestamp;";
-
-		// let limit = req.query.limit; //this is implemented in express module
-		// // console.log(limit);
-		// if(limit==undefined || Number.isInteger(Number(limit))==false){}
-		// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	
 // 		console.log(myquery);
 		conn.query(aux_query, function(err, result, fields){
