@@ -25,7 +25,7 @@ function health_check(req,res){
 			var check = {"status": 'OK',"state": conn.state, "host":config.host, "user": config.user, "port":config.port, "database":config.database }
 			res.send(check)
 		}
-		conn.end()
+		conn.end();
 	})	
 }
 
