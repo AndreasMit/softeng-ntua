@@ -21,7 +21,7 @@ var conn = mysql.createConnection({
 function resets(req,res){
 	 
 	conn.connect(function(err){
-		if(err) throw err;
+		// if(err) throw err;
 
 	let myquery1 = "delete from Stations;";
 	let myquery2 = fs.readFileSync('../database/ddl/station.sql').toString();

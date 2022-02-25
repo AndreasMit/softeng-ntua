@@ -16,15 +16,11 @@ var conn = mysql.createConnection({
 	});
 function health_check(req,res){
 	conn.connect(function(err){
-		if(err) throw err;
 		if(conn.state === 'disconnected') {
-			res.send({ "status": 'failed',"dbconnection":{"host":"softeng.mysql.database.azure.com","user":"softeng@softeng",
-			"password":"i6iNNUiu","database":"tollways","port":"3306","ssl":"{ca: fs.readFileSync(__dirname + '/../BaltimoreCyberTrustRoot.crt.pem')}"
-			} })
-		//router.get('/admin/healthcheck', {status: 'failed', dbconnection: 'connection_string'},health_check);
+			res.send({ "status": 'failed',"state": conn.state,"host":conn.host, "user": conn.user, "port":conn.port, "database":conn.database})
 		}
 		else {
-			var check = {"status": 'OK',"state": conn.state, "host":conn._host, "user": conn.user, "port":conn.port, "database":conn.database }
+			var check = {"status": 'OK',"state": conn.state, "host":conn.host, "user": conn.user, "port":conn.port, "database":conn.database }
 			res.send(check)
 		}
 		conn.end()

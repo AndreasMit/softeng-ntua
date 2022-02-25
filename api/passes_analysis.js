@@ -28,7 +28,7 @@ function analysis(req,res){
 	});
 
 	conn.connect(function(err){
-		if(err) throw err;
+		// if(err) throw err;
 		let op1_ID = req.params['op1_ID'];
 		let op2_ID = req.params['op2_ID'];
 		let date_from = req.params['date_from'];
