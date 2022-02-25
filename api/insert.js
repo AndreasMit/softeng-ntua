@@ -28,7 +28,7 @@ function insert(req,res){
 	});
 
 	conn.connect(function(err){
-		if(err) throw err;
+		// if(err) throw err;
 		let id = req.params['passID'];
 		let time = req.params['date'];
 		time = time.substring(6,8)+"/"+time.substring(4,6)+"/"+time.substring(0,4)+" "+time.substring(8,10)+":"+time.substring(10,12);

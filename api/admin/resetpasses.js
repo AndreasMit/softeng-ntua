@@ -34,7 +34,7 @@ function resetp(req,res){
 	// if(limit==undefined || Number.isInteger(Number(limit))==false){}
 	// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	conn.connect(function(err){
-		if(err) throw err;
+		// if(err) throw err;
 
 		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){

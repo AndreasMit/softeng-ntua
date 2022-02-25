@@ -26,7 +26,7 @@ function resetv(req,res){
 	// let date_to = req.params['date_to'];
 	 
 	conn.connect(function(err){
-		if(err) throw err;
+		// if(err) throw err;
 		let myquery1 = "delete from Vehicles;";
 		let myquery2 = fs.readfile('/../../database/ddl/vehicles.sql') 
 		console.log("queries setted")

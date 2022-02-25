@@ -28,7 +28,7 @@ function cost(req,res){
 	});
 
 	conn.connect(function(err){
-		if(err) throw err;
+		// if(err) throw err;
 		let op_ID = req.params['op_ID'];
 		let date_from = req.params['date_from'];
 		let date_to = req.params['date_to'];
