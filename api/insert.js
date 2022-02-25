@@ -57,6 +57,7 @@ function insert(req,res){
 				res.status(500)
 				res.send(new Error('Internal server error: aux q failed'))
 				throw err;
+				return;
 			}
 			if (result.length===0) {
 				res.status(402)
@@ -67,6 +68,7 @@ function insert(req,res){
 			if (result[0].balance-chrge<0) {
 // 				console.log("Not enough balance! Please pay with cash.");
 				res.status(305);
+				res.send(new Error('not enough money'))
 				return;
 			}
 			
@@ -74,7 +76,7 @@ function insert(req,res){
 			
 				let myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES ('"+id+"','"+time+"','"+station+"','"+vehicle+"',"+chrge+",'"+station+"','"+vehicle+"','"+hn+"','"+p+"','"+status+"');";
 // 				console.log(myquery);
-				conn.query(myquery, function(err, result, fields){
+				conn.query(myquery, function(err, resultt, fields){
 					if(err) {
 						res.status(500)
 						res.send(new Error('Internal server error'))
@@ -82,37 +84,37 @@ function insert(req,res){
 						console.log('Duplicate Entry');
 						return;
 					}
-					if (result.length===0) {
+					if (resultt.length===0) {
 						res.status(402)
 						res.send(new Error('No data'))
 						return;
 					}
+					// Update balance
+					let new_balance = result[0].balance-chrge;
+					let aux_query2 = "UPDATE Vehicles SET balance = '"+new_balance+"' WHERE vehicleID = '"+vehicle+"';";
+					conn.query(aux_query2, function(err, result, fields){
+						conn.end();
+						if(err) {
+							res.status(500)
+							res.send(new Error('Internal server error: aux q failed'))
+							throw err;
+						}
+						if (result.length===0) {
+							res.status(402)
+							res.send(new Error('No data'))
+							return;
+						}
+					});
+
 					if(req.query.format === 'csv'){
-					res.send(parse(result))
+						res.send(parse(resultt))
 					}
 					else {
-						res.send(result)
+						res.send(resultt)
 					}
 				});
 				
-				// Update balance
-				let new_balance = result[0].balance-chrge;
-// 				console.log("New Balance:");
-// 				console.log(new_balance);
-				let aux_query2 = "UPDATE Vehicles SET balance = '"+new_balance+"' WHERE vehicleID = '"+vehicle+"';";
-				conn.query(aux_query2, function(err, result, fields){
-					conn.end();
-					if(err) {
-						res.status(500)
-						res.send(new Error('Internal server error: aux q failed'))
-						throw err;
-					}
-					if (result.length===0) {
-						res.status(402)
-						res.send(new Error('No data'))
-						return;
-					}
-				});
+				
 			}
 		});
 	});

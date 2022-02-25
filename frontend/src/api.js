@@ -12,7 +12,7 @@ export const AddNewPass = obj => {
 	url += obj.charge + '/';
 	url += obj.hn +'/';
 	url += obj.homeaway;
-    console.log(url)
+    // console.log(url)
     return fetch(url);
 };
 

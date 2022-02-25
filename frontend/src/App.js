@@ -1,6 +1,5 @@
-// import logo from './logo.svg';
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes, useHistory,  Link , NavLink} from "react-router-dom";
+import React from 'react';
+import { Link } from "react-router-dom";
 import './App.css';
 
 
@@ -17,7 +16,7 @@ class App extends React.Component {
           </div>
           <br/>
           <div className="new-pass">
-            <Link to="/newpass">Insert new pass information</Link>
+            <Link to="/newpass">Insert new pass</Link>
           </div>
         </header>
       </div>
