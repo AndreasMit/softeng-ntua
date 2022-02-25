@@ -307,7 +307,7 @@ yargs.command({
 				}
 			});
 
-            var myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES "
+            var myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES \n"
             fs.createReadStream(argv.source)
             .pipe(csv())
             .on('data', function (row) {
@@ -316,18 +316,17 @@ yargs.command({
                   const station = row.stationRef;
                   const vehicle = row.vehicleRef;
                   const chrge = row.charge;
-                  const hn = station.substring(0,2);
+                  const hn = row.hn;//.substring(0,2);
                   const p = row.p;
                   const status = row.status;
-                  const query = "('"+id+"','"+time+"','"+station+"','"+vehicle+"',"+chrge+",'"+station+"','"+vehicle+"','"+hn+"','"+p+"','"+status+"'),"
+                  const query = "('"+id+"','"+time+"','"+station+"','"+vehicle+"',"+chrge+",'"+station+"','"+vehicle+"','"+hn+"','"+p+"','"+status+"'),\n"
                   myquery += query
             })
             .on('end', function () {
-                  myquery = myquery.substring(0, myquery.length - 1);
+                  myquery = myquery.substring(0, myquery.length - 2);
                   myquery+=';';
-// 				  console.log(myquery);
-                  
-            	conn.query(myquery, function(err, result, fields){
+				  
+                  conn.query(myquery, function(err, result, fields){
                   if(err) {
                         console.log('Internal server error')
                         throw err;
@@ -336,7 +335,7 @@ yargs.command({
                         console.log('No data')
                         return;
                   }
-
+				  console.log("Successfully added passes from " + argv.source + " file!")
                   conn.end();
                   return;
             	});

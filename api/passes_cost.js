@@ -64,13 +64,6 @@ function cost(req,res){
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') >= DATE_FORMAT('"+date_from+"', '%Y-%m-%d %H:%i')\
 		and STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') <= DATE_FORMAT('"+date_to+"', '%Y-%m-%d %H:%i')\
 		order by P.timestamp;";
-
-		// let limit = req.query.limit; //this is implemented in express module
-		// // console.log(limit);
-		// if(limit==undefined || Number.isInteger(Number(limit))==false){}
-		// else{ myquery = myquery + " LIMIT " + Number(limit); }
-	
-// 		console.log(myquery);
 		
 		conn.query(myquery, function(err, result, fields){
 			conn.end();
