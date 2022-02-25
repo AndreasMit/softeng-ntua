@@ -75,6 +75,12 @@ class NewPass extends React.Component {
             });
             return
           }
+          if (result.status ===  305){
+            this.setState({
+              error: "Not enough money, pay with cash"
+            });
+            return
+          }
           //reset state for next submit
           this.setState({
             passID: "",
