@@ -14,13 +14,15 @@ var conn = mysql.createConnection({
 			ca: fs.readFileSync(__dirname +'/..' +config.ssl)
 		}
 	});
+
 function health_check(req,res){
 	conn.connect(function(err){
+
 		if(conn.state === 'disconnected') {
-			res.send({ "status": 'failed',"state": conn.state,"host":conn.host, "user": conn.user, "port":conn.port, "database":conn.database})
+			res.send({ "status": 'failed',"state": conn.state,"host":config.host, "user": config.user, "port":config.port, "database":config.database})
 		}
 		else {
-			var check = {"status": 'OK',"state": conn.state, "host":conn.host, "user": conn.user, "port":conn.port, "database":conn.database }
+			var check = {"status": 'OK',"state": conn.state, "host":config.host, "user": config.user, "port":config.port, "database":config.database }
 			res.send(check)
 		}
 		conn.end()
