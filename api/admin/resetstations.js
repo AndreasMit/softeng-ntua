@@ -19,20 +19,14 @@ var conn = mysql.createConnection({
 	});
 
 function resets(req,res){
-
-	console.log("entered func");
-	// let op_ID = req.params['op_ID'];
-	// let date_from = req.params['date_from'];
-	// let date_to = req.params['date_to'];
 	 
+	conn.connect(function(err){
+		if(err) throw err;
+
 	let myquery1 = "delete from Stations;";
 	let myquery2 = fs.readFileSync('../database/ddl/station.sql').toString();
 	console.log("queries setted")
 
-	// let limit = req.query.limit; //this is implemented in express module
-	// console.log(limit);
-	// if(limit==undefined || Number.isInteger(Number(limit))==false){}
-	// else{ myquery = myquery + " LIMIT " + Number(limit); }
 
 	console.log(myquery1);
 	conn.query(myquery1, function(err, result, fields){
@@ -46,6 +40,7 @@ function resets(req,res){
 	});	
 	console.log(myquery2)
 	conn.query(myquery2, function(err, result, fields){
+		conn.end();
 	if(err) throw err;
 	if(result.fieldCount == 0){
 		res.send({"status":"OK"})
@@ -54,12 +49,8 @@ function resets(req,res){
 		res.send({"status":"failed"})
 	}
 });	
-	conn.end();
+})
+	
 }
-// conn.connect(function(err){
-// 	if(err) throw err;
-// // 	console.log("connected");
-// });
-// console.log("test");
 router.post('/admin/resetstations', resets)
 module.exports = router;

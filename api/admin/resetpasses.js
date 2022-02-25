@@ -33,23 +33,22 @@ function resetp(req,res){
 	// // console.log(limit);
 	// if(limit==undefined || Number.isInteger(Number(limit))==false){}
 	// else{ myquery = myquery + " LIMIT " + Number(limit); }
-
-	console.log(myquery);
-	conn.query(myquery, function(err, result, fields){
+	conn.connect(function(err){
 		if(err) throw err;
-		if(result.fieldCount == 0){
-			res.send({"status":"OK"})
-		}
-		else{
-			res.send({"status":"failed"})
-		}
-	});	
-	// conn.end();
+
+		console.log(myquery);
+		conn.query(myquery, function(err, result, fields){
+			conn.end();
+			if(err) throw err;
+			if(result.fieldCount == 0){
+				res.send({"status":"OK"})
+			}
+			else{
+				res.send({"status":"failed"})
+			}
+		});	
+	})
 }
-// conn.connect(function(err){
-// 	if(err) throw err;
-// // 	console.log("connected");
-// });
-// console.log("test");
+
 router.post('/admin/resetpasses', resetp)
 module.exports = router;

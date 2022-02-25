@@ -64,6 +64,7 @@ function cost(req,res){
 // 		console.log(myquery);
 		
 		conn.query(myquery, function(err, result, fields){
+			conn.end();
 			if(err) {
 				res.status(500)
 				res.send(new Error('Internal server error'))

@@ -10,12 +10,14 @@ class ClearDebt extends React.Component {
       opid: "EG",
       datefrom: "2021-11-01",
       dateto: "2021-11-30",
-      chargesby: [{}],
-      costby: [{}],
+      chargesby: [{VisitingOperator: '', NumberOfPasses:'', PassesCost:'' }],
+      costby: [{VisitingOperator: '', NumberOfPasses:'', PassesCost:'' }],
       total1: null,
       total2: null,
       total: null,
-      error: null
+      error: null,
+      success: null,
+      pay: null
     }
     this.operators = 
     [
@@ -44,7 +46,7 @@ class ClearDebt extends React.Component {
     items.forEach( item => {
       counter += item.PassesCost 
     });
-    this.setState({total1: counter})
+    this.setState({total1: counter.toFixed(2)})
   }
   ComputeTotal2(){
     var items = this.state.costby;
@@ -52,15 +54,19 @@ class ClearDebt extends React.Component {
     items.forEach( item => {
       counter += item.PassesCost 
     });
-    this.setState({total2: counter})
+    this.setState({total2: counter.toFixed(2)})
   }
   ComputeTotal(){
     var total1 = this.state.total1;
     var total2 = this.state.total2;
-    console.log(total2);
-    console.log(total1);
+    // console.log(total2);
+    // console.log(total1);
     var sub = total1 - total2
-    console.log(sub)
+    // console.log(sub)
+    if (sub>0){
+      this.setState({ pay: "Receive money others owe you:"})
+    }
+    else( this.setState({ pay: "Pay the money you owe:"}))
     this.setState({total: sub.toFixed(2)})
   }
 
@@ -68,19 +74,29 @@ class ClearDebt extends React.Component {
     const name = e.target.name;
     const value = e.target.value;
     this.setState({ [name] : value }); 
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   HandleSelectInput(e){
     const name = e.name;
     const value = e.value;
     this.setState({ [name] : value }); 
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   HandleClearDebt(){
-    //request to api to make unpaid to paid for the days specified
-    console.log('nothing yet')
+    this.setState({
+      opid: "",
+      datefrom: "",
+      dateto: "",
+      chargesby: [{VisitingOperator: '', NumberOfPasses:'', PassesCost:'' }],
+      costby: [{VisitingOperator: '', NumberOfPasses:'', PassesCost:'' }],
+      total1: null,
+      total2: null,
+      total: null,
+      error: null,
+      success: "transaction successful!"
+    })
   }
 
   Charge(){
@@ -88,12 +104,12 @@ class ClearDebt extends React.Component {
       this.setState({error: 'date_to should be later than date_from'})
     }
     else{
-    console.log("chargesby")
+    // console.log("chargesby")
     GetChargesBy(this.state)
     .then( res => res.json())
     .then(
         (result) => {
-          console.log(result)
+          // console.log(result)
           this.setState({
             chargesby: result
           });
@@ -109,7 +125,7 @@ class ClearDebt extends React.Component {
   }
 
   Cost(){
-    console.log("cost");
+    // console.log("cost");
     if(this.state.dateto < this.state.datefrom){
       this.setState({error: 'date to should be later than date from'})
     }
@@ -138,8 +154,6 @@ class ClearDebt extends React.Component {
     return (
       //choose dates if not show for all 
       //pay or receive 
-      //suppose no overllaping periods and then set everything as paid
-      //in the database per month
       <div className='clear-debt'>
 			 <h1> Information about passes for different stations </h1>
         
@@ -165,9 +179,12 @@ class ClearDebt extends React.Component {
           <p> Total money you owe: {this.state.total2} </p>
 			 
        <button name= 'compute total' onClick={this.ComputeTotal}> Compute Total </button>
-       <p> You need to receive or pay :{this.state.total} </p>
+       <p> Overall :{this.state.total} </p>
        <br />
-       <button name="transact" onClick={this.HandleClearDebt}> Pay or Receive money </button>
+       {this.state.pay} {Math.abs(this.state.total)}
+       <br />
+       <button name="transact" onClick={this.HandleClearDebt}> Transact </button>
+       <div id="success"> {this.state.success} </div>
 		  </div>
     );
   }
@@ -175,4 +192,4 @@ class ClearDebt extends React.Component {
 
 export default ClearDebt;
 
-    
+     

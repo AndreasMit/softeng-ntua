@@ -87,6 +87,7 @@ function analysis(req,res){
 			}
 		});
 		conn.query(myquery, function(err, result, fields){
+			conn.end();
 			if(err) {
 				res.status(500)
 				res.send(new Error('Internal server error'))
@@ -102,7 +103,7 @@ function analysis(req,res){
 			}else{res.send(result)}
 		});
 	});
-	// conn.end();
+	
 }
 
 router.get('/PassesAnalysis/:op1_ID/:op2_ID/:date_from/:date_to', analysis);

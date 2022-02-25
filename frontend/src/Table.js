@@ -1,4 +1,5 @@
 import React from 'react';
+import { v4 as uuid } from 'uuid';
 
 export default class Table extends React.Component {
  
@@ -46,6 +47,8 @@ export default class Table extends React.Component {
 
 const RenderRow = (props) =>{
  	return props.keys.map((key, index)=>{
- 		return <td key={props.data[key]}>{props.data[key]}</td>
+ 		const unique = uuid();
+ 		// console.log(unique)
+ 		return <td key={unique}>{props.data[key]}</td>
  	})
 }

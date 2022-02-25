@@ -15,7 +15,8 @@ class NewPass extends React.Component {
     	charge: "2.8",
     	hn: "OO",
     	homeaway: "home",
-    	error : null
+    	error : null,
+      success: null
 
     }
     this.operators = 
@@ -56,7 +57,7 @@ class NewPass extends React.Component {
       .then(
         (result) => {
           if (result.status ===  500){
-            console.log(result);
+            // console.log(result);
             this.setState({
               error: "dublicate entry"
             });
@@ -74,25 +75,26 @@ class NewPass extends React.Component {
             });
             return
           }
+          //reset state for next submit
+          this.setState({
+            passID: "",
+            timestamp: "",
+            time: "",
+            stationRef: "",
+            vehicleRef: "",
+            charge: "",
+            hn: "",
+            homeaway: "",
+            success: "New Pass added successfully!",
+            error: null
+          } )
         },
         (error)=> {
           this.setState({
             error: error
           });
         }
-      )
-
-    //reset state for next submit
-    this.setState({
-      passID: "",
-      timestamp: "",
-      time: "",
-      stationRef: "",
-      vehicleRef: "",
-      charge: "",
-      hn: "",
-      homeaway: ""
-      } )
+      ) 
     }
   }
   
@@ -100,13 +102,13 @@ class NewPass extends React.Component {
   	const name = e.target.name;
   	const value = e.target.value;
   	this.setState({ [name] : value }); 
-  	console.log(this.state);
+  	// console.log(this.state);
   }
   HandleSelectInput(e){
     const name = e.name;
     const value = e.value;
     this.setState({ [name] : value }); 
-    console.log(this.state);
+    // console.log(this.state);
   }
 
 
@@ -145,6 +147,7 @@ class NewPass extends React.Component {
       	</form>
 
       	<button name='submit' onClick={this.HandleSubmit}> Submit pass </button>
+        <div id="success"> {this.state.success} </div>
       </div>
     );
   }

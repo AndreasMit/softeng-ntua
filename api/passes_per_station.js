@@ -93,6 +93,7 @@ function perStation(req,res){
 			}
 		});
 		conn.query(myquery, function(err, result, fields){
+			conn.end();
 			if(err) {
 				res.status(500)
 				res.send(new Error('Internal server error'))
@@ -108,7 +109,7 @@ function perStation(req,res){
 			}else{res.send(result)}
 		});
 	});
-	// conn.end();
+	
 }
 
 router.get('/PassesPerStation/:stationID/:date_from/:date_to', perStation);

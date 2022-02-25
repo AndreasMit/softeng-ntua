@@ -47,6 +47,7 @@ function resetv(req,res){
 			}
 		});
 		conn.query(myquery2, function(err, result, fields){
+			conn.end();
 			if(err) throw err;
 			if(result.fieldCount == 0){
 				res.send({"status":"OK"})
@@ -55,7 +56,6 @@ function resetv(req,res){
 				res.send({"status":"failed"})
 			}
 		});	
-	// conn.end();
 	});
 };
 

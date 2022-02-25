@@ -11,14 +11,14 @@ export const AddNewPass = obj => {
 	url += obj.charge + '/';
 	url += obj.hn +'/';
 	url += obj.homeaway;
-    console.log(url)
+    // console.log(url)
     return fetch(url);
 };
 export const UpdateBalance = obj =>{
 	var url = 'https://localhost:9103/interoperability/api/UpdateBalance/';
 	url += obj.vehicleRef + '/';
 	url += obj.charge;
-	console.log(url);
+	// console.log(url);
 	return fetch(url);
 };
 
@@ -31,7 +31,7 @@ export const GetCostBy = obj =>{
 		url += '/' + obj.datefrom.replace("-","").replace("-","");
 		url += '/' + obj.dateto.replace("-","").replace("-","");
 	};
-	console.log(url);
+	// console.log(url);
 	return fetch(url);
 }
 
@@ -42,16 +42,8 @@ export const GetChargesBy = obj =>{
 		url += '/' + obj.datefrom.replace("-","").replace("-","");
 		url += '/' + obj.dateto.replace("-","").replace("-","");
 	};
-	console.log(url);
+	// console.log(url);
 	return fetch(url);
 }
 
-export const UpdateCleared = obj =>{
-	var url = 'https://localhost:9103/interoperability/api/UpdateCleared/';
-	url += obj.opid + '/';
-	url += obj.datefrom.replace("-","").replace("-","") + '/';
-	url += obj.dateto.replace("-","").replace("-","");
-	console.log(url)
-	return fetch(url);
-}
 

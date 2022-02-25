@@ -73,6 +73,7 @@ function cost(req,res){
 // 		console.log(myquery);
 		
 		conn.query(myquery, function(err, result, fields){
+			conn.end();
 			if(err) {
 				res.status(500)
 				res.send(new Error('Internal server error'))
@@ -88,7 +89,6 @@ function cost(req,res){
 			}else{res.send(result)}
 		});
 	});
-	// conn.end();
 }
 
 router.get('/PassesCost/:op1_ID/:op2_ID/:date_from/:date_to', cost);
