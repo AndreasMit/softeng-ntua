@@ -62,7 +62,7 @@ function perStation(req,res){
 		let aux_query = 'set @row_number = 0;'
 		let myquery = "select (@row_number:=@row_number + 1) AS PassIndex, \
 		P.passID as PassID, \
-		STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') as PassTimeStamp, \
+		P.timestamp as PassTimeStamp, \
 		P.vehicleRef as VehicleID, \
 		V.tagProvider as TagProvider, \
 		case when P.p <> 'home' then 'visitor' else 'home' end as PassType, \
