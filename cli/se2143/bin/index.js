@@ -10,7 +10,7 @@ var mysql = require('mysql')
 
 const https = require('https')
 const httpsAgent = new https.Agent({ rejectUnauthorized: false })
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const hello = chalk.hex('#83aaff')("This is the CLI for softeng team 43!")
 console.log(hello);
 
@@ -31,7 +31,7 @@ yargs.showHelpOnFail(true)
 // functionalities
 yargs.command({
       command: 'passesperstation',
-      describe: ' --station <eg.AO01> --from <eg.20211101> --to <eg. 20211130>',
+      describe: ' --station <eg.AO01> --from <eg.20211101> --to <eg. 20211130> --format fff',
       builder: {
             station: {
                   describe: 'station',
@@ -71,7 +71,7 @@ yargs.command({
 
 yargs.command({
       command: 'passesanalysis',
-      describe: ' --op1 <eg.AO> --op2 <eg.EG> --from  --to ',
+      describe: ' --op1 <eg.AO> --op2 <eg.EG> --from  --to --format fff',
       builder: {
             op1: {
                   describe: 'operator 1',
@@ -114,7 +114,7 @@ yargs.command({
 })
 yargs.command({
       command: 'passescost',
-      describe: ' --op1 --op2 --from --to ',
+      describe: ' --op1 --op2 --from --to --format fff',
       builder: {
             op1: {
                   describe: 'operator 1',
@@ -157,7 +157,7 @@ yargs.command({
 })
 yargs.command({
       command: 'chargesby',
-      describe: ' --op1 --from --to ',
+      describe: ' --op1 --from --to --format fff',
       builder: {
             op1: {
                   describe: 'operator 1',
@@ -281,7 +281,7 @@ yargs.command({
 
 yargs.command({
       command: 'admin',
-      describe: 'reset all vehicles from database',
+      describe: 'update passes from csv: --passesupd --source <eg.input.csv>',
       builder: {
             passesupd:{
                   describe: 'passes update',

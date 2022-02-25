@@ -1,0 +1,37 @@
+sudo apt update
+sudo apt install apache2
+
+edit .conf in etc/apache2/sites-available:
+	ProxyPreserveHost on
+        ProxyPass / http://localhost:9103/
+        ProxyPassReverse / http://localhost:9103/
+
+sudo apt-get upgrade
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash
+sudo apt-get install nodejs
+
+sudo a2enmod proxy
+sudo a2enmod proxy_http
+systemctl restart apache2
+
+sudo npm install -g pm2
+
+git clone https://github.com/ntua/TL21-43.git
+
+sudo pm2 start index.js
+sudo pm2 startup systemd
+
+npm install cors
+npm install react-scripts
+npm install uuidv4
+
+cd api
+node index.js
+
+cd frontend
+npm start
+
+cd cli/se2143
+npm install -g
+
+
