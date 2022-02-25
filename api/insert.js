@@ -19,7 +19,7 @@ function insert(req,res){
 	var conn = mysql.createConnection({
 		host: config.host, 
 		user: config.user,
-		password: config.password, 
+		password: config.password,
 		database: config.database, 
 		port: config.port,
 		ssl:{
@@ -31,7 +31,7 @@ function insert(req,res){
 		// if(err) throw err;
 		let id = req.params['passID'];
 		let time = req.params['date'];
-		time = time.substring(0,1)+"/"+time.substring(1,2)+"/"+time.substring(2,6)+" "+time.substring(6,8)+":"+time.substring(8,10);
+		time = time.substring(6,8)+"/"+time.substring(4,6)+"/"+time.substring(0,4)+" "+time.substring(8,10)+":"+time.substring(10,12);
 		let station = req.params['stationID'];
 		let vehicle = req.params['vehicleID'];
 		let chrge = req.params['charge'];
@@ -50,7 +50,7 @@ function insert(req,res){
 			return;
 		}
 		let myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES ('"+id+"','"+time+"','"+station+"','"+vehicle+"',"+chrge+",'"+station+"','"+vehicle+"','"+hn+"','"+p+"','"+status+"');";
-	
+		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){
 			conn.end();
 			if(err) {
@@ -78,5 +78,5 @@ function insert(req,res){
 
 router.get('/Insert/:passID/:date/:stationID/:vehicleID/:charge/:visitingOperator/:homeaway', insert);
 //testing
-//http://localhost:9103/interoperability/api/Insert/TOB7336760/1120190137/OO12/AT19HLV57173/2.8/OO/home/
+//https://localhost:9103/interoperability/api/Insert/TOB7336760/1120190137/OO12/AT19HLV57173/2.8/OO/home/
 module.exports = router;
