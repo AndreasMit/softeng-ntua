@@ -34,4 +34,6 @@ npm start
 cd cli/se2143
 npm install -g
 
+export NODE_NO_WARNINGS=1
+
 

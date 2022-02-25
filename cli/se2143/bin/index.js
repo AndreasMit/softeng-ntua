@@ -10,7 +10,8 @@ var mysql = require('mysql')
 
 const https = require('https')
 const httpsAgent = new https.Agent({ rejectUnauthorized: false })
-// process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+process.env.NODE_NO_WARNINGS=1;
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const hello = chalk.hex('#83aaff')("This is the CLI for softeng team 43!")
 console.log(hello);
 
