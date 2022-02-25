@@ -2,6 +2,7 @@ import React from 'react';
 import { GetCostBy, GetChargesBy } from "./api";
 import Table from './Table';
 import Select from 'react-select'
+import './ClearDebt.css'
 
 class ClearDebt extends React.Component {
   constructor(props){
@@ -46,7 +47,11 @@ class ClearDebt extends React.Component {
     items.forEach( item => {
       counter += item.PassesCost 
     });
-    this.setState({total1: counter.toFixed(2)})
+    if(isNaN(counter)) { this.setState({total1: null })}
+    else{ 
+      this.setState({total1: counter.toFixed(2)})
+    }
+    
   }
   ComputeTotal2(){
     var items = this.state.costby;
@@ -54,7 +59,10 @@ class ClearDebt extends React.Component {
     items.forEach( item => {
       counter += item.PassesCost 
     });
-    this.setState({total2: counter.toFixed(2)})
+    if(isNaN(counter)) { this.setState({total1: null })}
+    else{
+      this.setState({total2: counter.toFixed(2)})
+    }
   }
   ComputeTotal(){
     var total1 = this.state.total1;
@@ -75,6 +83,7 @@ class ClearDebt extends React.Component {
     const value = e.target.value;
     this.setState({ [name] : value }); 
     // console.log(this.state);
+    this.setState({success: null })
   }
 
   HandleSelectInput(e){
@@ -82,9 +91,11 @@ class ClearDebt extends React.Component {
     const value = e.value;
     this.setState({ [name] : value }); 
     // console.log(this.state);
+    this.setState({success: null })
   }
 
   HandleClearDebt(){
+    if(this.state.total!==null){ 
     this.setState({
       opid: "",
       datefrom: "",
@@ -98,9 +109,14 @@ class ClearDebt extends React.Component {
       success: "transaction successful!"
     })
   }
+  }
 
   Charge(){
-    if(this.state.dateto < this.state.datefrom){
+    this.setState({error: null })
+    if(this.state.dateto ==="" || this.state.datefrom === ""){
+      this.setState({error: 'date_to and date_from should be filled'})
+    }
+    else if(this.state.dateto < this.state.datefrom){
       this.setState({error: 'date_to should be later than date_from'})
     }
     else{
@@ -109,11 +125,12 @@ class ClearDebt extends React.Component {
     .then( res => res.json())
     .then(
         (result) => {
-          // console.log(result)
-          this.setState({
-            chargesby: result
-          });
-          this.ComputeTotal1();
+            this.setState({
+              chargesby: result
+            });
+            if(result[0]!== {}){ 
+              this.ComputeTotal1();
+            }
         },
         (error)=> {
           this.setState({
@@ -125,8 +142,11 @@ class ClearDebt extends React.Component {
   }
 
   Cost(){
-    // console.log("cost");
-    if(this.state.dateto < this.state.datefrom){
+    this.setState({error: null })
+    if(this.state.dateto ==="" || this.state.datefrom === ""){
+      this.setState({error: 'date_to and date_from should be filled'})
+    }
+    else if(this.state.dateto < this.state.datefrom){
       this.setState({error: 'date to should be later than date from'})
     }
     else{
@@ -134,10 +154,12 @@ class ClearDebt extends React.Component {
     .then( res => res.json() )
     .then(
         (result) => {
-          this.setState({
-            costby: result
-          });
-          this.ComputeTotal2();
+            this.setState({
+             costby: result
+            });
+            if(result[0]!== {}){ 
+             this.ComputeTotal2();
+           }
         },
         (error)=> {
           this.setState({
@@ -152,11 +174,9 @@ class ClearDebt extends React.Component {
 
   render(){
     return (
-      //choose dates if not show for all 
-      //pay or receive 
       <div className='clear-debt'>
-			 <h1> Information about passes for different stations </h1>
-        
+			 <h1> Information about passes </h1>
+        <form>
         <p> I am operator (instead of login): </p>
         <Select  options={this.operators} type="opid" name="opid"  field='opid' onChange={this.HandleSelectInput} />
 
@@ -165,10 +185,11 @@ class ClearDebt extends React.Component {
         <input type="date" name="datefrom" field="datefrom"  value={this.state.datefrom} onChange={this.HandleUserInput} />
         <label htmlFor="dateto">To: </label>
         <input type="date" name="dateto" field="dateto" value={this.state.dateto} onChange={this.HandleUserInput} />
-        
+        </form>
+
         <div className='error'> {this.state.error} </div> 
         <button name="compute" onClick={ ()=> {this.Cost(); this.Charge()}}> Compute debt </button>
-        
+        <div className= 'data'>
         <h2> Money other stations owe you </h2>
           <Table data={this.state.chargesby} />
           <p> Total money owed: {this.state.total1} </p>
@@ -183,8 +204,9 @@ class ClearDebt extends React.Component {
        <br />
        {this.state.pay} {Math.abs(this.state.total)}
        <br />
+       </div>
        <button name="transact" onClick={this.HandleClearDebt}> Transact </button>
-       <div id="success"> {this.state.success} </div>
+       <div className="success"> {this.state.success} </div>
 		  </div>
     );
   }

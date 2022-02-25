@@ -73,7 +73,7 @@ function charges(req,res){
 			}
 			if (result.length===0) {
 				res.status(402)
-				res.send(new Error('No data'))
+				res.send([{}])
 				return;
 			}
 			if(req.query.format === 'csv'){

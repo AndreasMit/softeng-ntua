@@ -1,0 +1,79 @@
+.new-form {
+  text-align: center;
+  background-color: #282c34;
+  padding:20px;
+}
+h2{
+  font-size: 40px;
+  color: #61dafb;
+padding-bottom: 40px;
+margin-bottom:50px;
+border-bottom: 3px solid #61dafb;
+}
+label{
+  font-size: 40px;
+  color: #61dafb;
+}
+input{
+  color:white;
+text-align:center;
+}
+form {
+  margin-left: auto;
+  margin-right: auto;
+  color: #61dafb;
+  width:600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+}
+
+
+.select{
+  background-color: #282c34;
+    width:100px;
+    height:50px;
+margin-top:-20px;
+margin-bottom:30px;
+font-size:20px;
+
+}
+.select1{
+  background-color: #282c34;
+    width:150px;
+    height:50px;
+margin-top:-20px;
+margin-bottom:30px;
+font-size:20px;
+
+}
+
+button{
+font-size: 40px;
+background-color: #282c34;
+color: #61dafb;
+margin:20px;
+padding:20px;
+border:2px solid #61dafb; 
+}
+button:hover{
+background-color: #61dafb;
+color:#282c34;
+}
+
+.error{
+font-size:20px;
+background-color: #f0c0bb;
+color: red;
+padding-left: 30px;
+padding-right:30px;
+}
+.success{
+font-size:30px;
+background-color: #dbf0bb;
+color: green;
+}
+
+

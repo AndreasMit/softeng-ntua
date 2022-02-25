@@ -1,6 +1,7 @@
 import React from 'react';
 import { AddNewPass } from './api';
 import Select from 'react-select'
+import './NewPass.css'
 
 
 class NewPass extends React.Component {
@@ -56,10 +57,11 @@ class NewPass extends React.Component {
   		AddNewPass(this.state)
       .then(
         (result) => {
+          // console.log(result)
           if (result.status ===  500){
             // console.log(result);
             this.setState({
-              error: "dublicate entry"
+              error: "duplicate entry"
             });
             return
           }
@@ -120,9 +122,6 @@ class NewPass extends React.Component {
 
   render(){
     return (
-        //eleghos ypoloipoy
-        //cash if not enought money -> alert and not proceed
-        // else update balance for the vehicle!!
       <div className='new-form'>
       	<h2> Insert new pass data </h2>
       	<form>
@@ -144,16 +143,16 @@ class NewPass extends React.Component {
       		<input name='charge' field='charge' placeholder='eg 2.5' value={this.state.charge} onChange={this.HandleUserInput}/>
 
       		<label htmlFor="hn">Operator that vehicleID belongs to:</label><br/>
-          <Select  options={this.operators} type="hn" name="hn"  field='hn' onChange={this.HandleSelectInput} />
+          <Select className='select' options={this.operators} type="hn" name="hn"  field='hn' onChange={this.HandleSelectInput} />
 
           <label htmlFor="homeaway">Does the vehicleID belong to this Or other operator:</label><br/>
-          <Select  options={this.ha} type="homeaway" name="homeaway"  field='homeaway' onChange={this.HandleSelectInput} />
+          <Select className='select1' options={this.ha} type="homeaway" name="homeaway"  field='homeaway' onChange={this.HandleSelectInput} />
 
           <div className='error'> {this.state.error} </div>    		
       	</form>
 
       	<button name='submit' onClick={this.HandleSubmit}> Submit pass </button>
-        <div id="success"> {this.state.success} </div>
+        <div className="success"> {this.state.success} </div>
       </div>
     );
   }
