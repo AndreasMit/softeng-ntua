@@ -25,7 +25,7 @@ function resets(req,res){
 		let myquery1 = "delete from Stations;";
 		let myquery2 = fs.readFileSync('../database/dml/station.sql').toString();
 
-		console.log(myquery1);
+// 		console.log(myquery1);
 		conn.query(myquery1, function(err, result, fields){
 			if(err) throw err;
 // 		if(result.fieldCount == 0){

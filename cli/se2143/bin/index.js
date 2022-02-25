@@ -328,8 +328,9 @@ yargs.command({
 				  
                   conn.query(myquery, function(err, result, fields){
                   if(err) {
-                        console.log('Internal server error')
-                        throw err;
+				  		console.log("Duplicate entries found!");
+				  		conn.end();
+				  		return;
                   }
                   if (result.length===0) {
                         console.log('No data')
