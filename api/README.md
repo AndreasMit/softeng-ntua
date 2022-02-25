@@ -3,22 +3,24 @@
 
 It requires nodejs, npm and express module to be installed.
 
-run command: 
+Run command: 
 
-node index.js 
+`node index.js`
 
 After that api can reply to requests from clients such as cli or frontend  
 
-Περιεχόμενα:
-ssl certificate :
+**Περιεχόμενα:**
+
+*ssl certificate*:
+
 openssl req -nodes -new -x509 -keyout server.key -out server.cert
 
-Index js:
+*Index js*:
 main node that runs and routes all the other processes
 
-Endpoints:
+*Endpoints*:
 endpoints such as passes_cost and passes_per_station which implement functionalities
 
-admin folder:
+*admin folder*:
 In this folder there are some basic endpoints which implement basic tests and actions
 
