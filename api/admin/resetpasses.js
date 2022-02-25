@@ -7,6 +7,10 @@ const config = require('../config')
 
 const app = express();
 
+
+
+function resetp(req,res){
+
 var conn = mysql.createConnection({
 		host: config.host, 
 		user: config.user,
@@ -18,18 +22,21 @@ var conn = mysql.createConnection({
 		}
 	});
 
-function resetp(req,res){
-
 	let myquery = "delete from Passes;"; 
 
 	conn.connect(function(err){
-		// if(err) throw err;
 
 		conn.query(myquery, function(err, result, fields){
 			conn.end();
-			if(err) throw err;
-			if(result.fieldCount == 0){
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error'))
+				return;
+			}
+			//  console.log(result);
+			if (result.fieldCount===0) {
 				res.send({"status":"OK"})
+				return;
 			}
 			else{
 				res.send({"status":"failed"})

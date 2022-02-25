@@ -6,7 +6,11 @@ const axios = require('axios')
 const config = require('../config')
 const app = express();
 
-var conn = mysql.createConnection({
+
+	
+function resetv(req,res){
+
+	 var conn = mysql.createConnection({
 	host: config.host, 
 	user: config.user,
 	password: config.password, 
@@ -16,28 +20,31 @@ var conn = mysql.createConnection({
 		ca: fs.readFileSync(__dirname + '/..' +config.ssl)
 	}
 })
-	
-function resetv(req,res){
-	 
+
 	conn.connect(function(err){
 		// if(err) throw err;
 		let myquery1 = "delete from Vehicles;";
 		let myquery2 = fs.readFileSync('../database/dml/vehicles.sql').toString();
 
 		conn.query(myquery1, function(err, result, fields){
-			if(err) throw err;
-// 			if(result.fieldCount == 0){
-// 				res.send({"status":"OK"})
-// 			}
-// 			else{
-// 				res.send({"status":"failed"})
-// 			}
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error'))
+				return;
+			}
+
 		});
 		conn.query(myquery2, function(err, result, fields){
 			conn.end();
-			if(err) throw err;
-			if(result.fieldCount == 0){
+			if(err) {
+				res.status(500)
+				res.send(new Error('Internal server error'))
+				return;
+			}
+			//  console.log(result);
+			if (result.fieldCount===0) {
 				res.send({"status":"OK"})
+				return;
 			}
 			else{
 				res.send({"status":"failed"})
