@@ -15,13 +15,6 @@ export const AddNewPass = obj => {
     console.log(url)
     return fetch(url);
 };
-export const UpdateBalance = obj =>{
-	var url = 'https://localhost:9103/interoperability/api/UpdateBalance/';
-	url += obj.vehicleRef + '/';
-	url += obj.charge;
-	// console.log(url);
-	return fetch(url);
-};
 
 // for Clear Debt
 
