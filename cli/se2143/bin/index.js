@@ -327,7 +327,7 @@ yargs.command({
                   myquery+=';';
 // 				  console.log(myquery);
                   
-                  conn.query(myquery, function(err, result, fields){
+            	conn.query(myquery, function(err, result, fields){
                   if(err) {
                         console.log('Internal server error')
                         throw err;
@@ -339,7 +339,7 @@ yargs.command({
 
                   conn.end();
                   return;
-            });
+            	});
         })
       }
 })

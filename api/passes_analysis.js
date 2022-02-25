@@ -58,7 +58,7 @@ function analysis(req,res){
 		let myquery = "select (@row_number:=@row_number + 1) AS PassIndex,\
 		P.passID as PassID, \
 		P.stationRef as StationID,\
-		STR_TO_DATE(P.timestamp,'%d/%m/%Y %H:%i') as PassTimeStamp, \
+		P.timestamp as PassTimeStamp, \
 		P.vehicleRef as VehicleID,\
 		P.charge as PassCharge\
 		from Passes as P inner join Stations as S\
