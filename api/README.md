@@ -13,12 +13,12 @@ After that api can reply to requests from clients such as cli or frontend
 ssl certificate :
 openssl req -nodes -new -x509 -keyout server.key -out server.cert
 
-Node js:
+Index js:
 main node that runs and routes all the other processes
 
 Endpoints:
-endpoints such us passes_cost and passes_per_station wich implement functionalities
+endpoints such as passes_cost and passes_per_station which implement functionalities
 
 admin folder:
-In this folder there are some basic endpoints wich implement basic tests and actions
+In this folder there are some basic endpoints which implement basic tests and actions
 

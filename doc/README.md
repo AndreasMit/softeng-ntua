@@ -4,4 +4,4 @@
 
 - ΕΝΑ αρχείο Visual Paradigm με τα ζητούμενα διαγράμματα.
 - Εγγραφο SRS - Software Requirements Specification.
-- Εγγραφο StRS - Stakeholders Requirements Specification.
+- ΔΥΟ Εγγραφα StRS - Stakeholders Requirements Specification.
