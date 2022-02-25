@@ -5,11 +5,12 @@ const axios = require("axios");
 const yargs = require('yargs')
 const fs = require('fs')
 const csv = require('csv-parser');
+const config = require('../../../api/config')
 var mysql = require('mysql')
 
 const https = require('https')
 const httpsAgent = new https.Agent({ rejectUnauthorized: false })
-
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 const hello = chalk.hex('#83aaff')("This is the CLI for softeng team 43!")
 console.log(hello);
 
@@ -295,16 +296,16 @@ yargs.command({
       },
       // Function for your command
       handler(argv) {
-            var conn = mysql.createConnection({
-                  host: "softeng-db.mysql.database.azure.com", 
-                  user: "softeng@softeng-db",
-                  password: "i6iNNUiu", 
-                  database: "tollways",
-                  port: 3306 ,
-                  ssl:{
-                        ca: fs.readFileSync(__dirname + '/BaltimoreCyberTrustRoot.crt.pem')
-                  }
-            });
+			var conn = mysql.createConnection({
+				host: config.host, 
+				user: config.user,
+				password: config.password, 
+				database: config.database, 
+				port: config.port,
+				ssl:{
+					ca: fs.readFileSync(__dirname + '/../../../api' + config.ssl)
+				}
+			});
 
             var myquery =  "INSERT INTO passes(passID,timestamp,stationRef,vehicleRef,charge,t,v,hn,p,status) VALUES "
             fs.createReadStream(argv.source)
@@ -324,7 +325,6 @@ yargs.command({
             .on('end', function () {
                   myquery = myquery.substring(0, myquery.length - 1);
                   myquery+=';';
-                  // console.log(myquery);
                   conn.query(myquery, function(err, result, fields){
                   if(err) {
                         console.log('Internal server error')
@@ -334,10 +334,11 @@ yargs.command({
                         console.log('No data')
                         return;
                   }
-                  console.log(result);
+//                   console.log(result);
+                  conn.end();
+                  return;
             });
-            })
-           
+        })
       }
 })
 

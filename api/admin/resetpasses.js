@@ -20,23 +20,11 @@ var conn = mysql.createConnection({
 
 function resetp(req,res){
 
-	console.log("entered func");
-	// let op_ID = req.params['op_ID'];
-	// let date_from = req.params['date_from'];
-	// let date_to = req.params['date_to'];
-	 
-
 	let myquery = "delete from Passes;"; 
 
-
-	// let limit = req.query.limit; //this is implemented in express module
-	// // console.log(limit);
-	// if(limit==undefined || Number.isInteger(Number(limit))==false){}
-	// else{ myquery = myquery + " LIMIT " + Number(limit); }
 	conn.connect(function(err){
 		// if(err) throw err;
 
-		console.log(myquery);
 		conn.query(myquery, function(err, result, fields){
 			conn.end();
 			if(err) throw err;
